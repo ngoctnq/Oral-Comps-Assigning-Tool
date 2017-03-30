@@ -13,6 +13,6 @@ cd Oral-Comps-Assigning-Tool
 ./py_install.sh
 ```
 
-to install <i>pip</i> and module dependencies. If you want to install the dependencies globally, respond "<i>N</i>" at the prompt, and follow instruction.
+to install <i>pip</i> and module dependencies. If you want to install the dependencies globally, respond "<i>n</i>" at the prompt, and follow instruction.
 
 <i>Step ∞:</i> Run `./main.py`.
