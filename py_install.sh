@@ -18,9 +18,9 @@ else
    sudo echo "testing sudo..."
 fi
 if not hash pip 2>/dev/null; then
-   python -m ensurepip
-else
    echo "pip installed"
+else
+   python -m ensurepip $LOC
 fi
 python -m pip install -U pip $LOC
 
