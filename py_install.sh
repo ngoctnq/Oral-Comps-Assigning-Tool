@@ -26,4 +26,5 @@ python -m pip install -U pip $LOC
 
 # installing NumPy and SciPy
 # python -m pip install numpy $LOC
-# python -m pip install scipy $LOC # NumPy is a dependency, so if this line is ran, no need to uncomment the above
+# NumPy is a dependency of SciPy, so no need to uncomment the above
+python -m pip install scipy $LOC
