@@ -16,3 +16,5 @@ cd Oral-Comps-Assigning-Tool
 to install <i>pip</i> and module dependencies. If you want to install the dependencies globally, respond "<i>n</i>" at the prompt, and follow instruction.
 
 <i>Step ∞:</i> Run `./main.py`.
+
+known bug: financial econ gets either finance or econ
