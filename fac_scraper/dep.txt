@@ -1,0 +1,41 @@
+Accounting,ACC
+Art,ART
+Asian Studies,ASI
+Biology,BIO
+Black Studies,BLS
+Business,BUS
+Chemistry,CHE
+Classics,CLA
+Colloquium,COL
+Computer Science,CSC
+Division I,DV1
+Division III,DV3
+Economics,ECO
+Education,EDU
+English,ENG
+French,FRE
+Freshman Tutorial,FRT
+Gender Studies,GEN
+German,GER
+Global Health,GHL
+Greek,GRK
+Hispanic Studies,HSP
+History,HIS
+Humanities,HUM
+Latin,LAT
+Mathematics,MAT
+Modern Languages and Literatures,MLL
+Multicultural American Studies,MAS
+Music,MUS
+Neuroscience,NSC
+Off Campus Studies,OCS
+Philosophy,PHI
+Physical Education,PE
+Physics,PHY
+Political Science,PSC
+Psychology,PSY
+Religion,REL
+Rhetoric,RHE
+Sociology,SOC
+Spanish,SPA
+Theater,THE
