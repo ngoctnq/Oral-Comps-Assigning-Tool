@@ -8,3 +8,5 @@ import init
 
 # initializations
 init.import_data()
+
+# list of variables
