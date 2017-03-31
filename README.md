@@ -17,4 +17,5 @@ to install <i>pip</i> and module dependencies. If you want to install the depend
 
 <i>Step ∞:</i> Run `./main.py`.
 
-known bug: financial econ gets either finance or econ
+## known bug:
+financial econ gets either finance or econ
