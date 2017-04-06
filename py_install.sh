@@ -28,3 +28,4 @@ python -m pip install -U pip $LOC
 # python -m pip install numpy $LOC
 # NumPy is a dependency of SciPy, so no need to uncomment the above
 # python -m pip install scipy $LOC
+python -m pip install pandas $LOC
