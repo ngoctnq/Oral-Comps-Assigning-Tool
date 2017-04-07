@@ -1,4 +1,8 @@
 data;
 
-set STUDENT := 0 1 2;
+set STUDENT := 0 1 2 3;
 set TEACHER := 0 1;
+set MAT := 0;
+set CSC := 0;
+set PHY := 0;
+set CHE := 0;
