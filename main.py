@@ -37,11 +37,12 @@ for i in range(depts_c):
 
 f = open('lingo_file.txt', 'w')
 f.write('Min = 1;\n')
+
 # legend: v%d%i%p%s
-# %d: day of oral
-# %i: session in day
-# %p: professor ID
-# %s: student ID
+    # %d: day of oral
+    # %i: session in day
+    # %p: professor ID
+    # %s: student ID
 
 # no same timeslot for a teacher
 # for each prof

@@ -1,0 +1,4 @@
+data;
+
+set STUDENT := 0 1 2;
+set TEACHER := 0 1;
