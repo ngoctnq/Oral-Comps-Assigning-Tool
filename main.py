@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 '''
 Oral Comprehensive Assigning Tool
 MAT-226 Final Project
@@ -8,6 +8,9 @@ import init
 
 # format number to put in variable name
 def frmt(i):
+    '''
+    Format a number into a string (with zero-padding, for eg)
+    '''
     return str(i)
 
 # initializations
@@ -32,7 +35,7 @@ for i in range(depts_c):
         if str(i) in ts.get_value(j,'DP'):
             t_cache[i].append(j)
 
-f = open('lingo_file.txt','w')
+f = open('lingo_file.txt', 'w')
 f.write('Min = 1;\n')
 # legend: v%d%i%p%s
 # %d: day of oral
@@ -52,7 +55,7 @@ for l in range(t_count):
                 # no same timeslot
                 f.write('v'+frmt(i)+frmt(j)+frmt(k)+frmt(l)+' + ')
     f.write('0 <= 1;\n')
-                
+
 # exact 1 timeslots/3 profs for a student
 # for each student
 for k in range(s_count):
