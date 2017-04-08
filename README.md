@@ -19,6 +19,8 @@ to install <i>pip</i> and module dependencies. If you want to install the depend
 
 <i>Step ∞-1:</i> Run `cd ampl; [path/to/ampl] mock.run`. This will yield non-human-readable data in the 'output' file.
 
+<sub>Note: I don't think this works lol lemme double check</sub>
+
 <i>Step ∞:</i> Run `./parse_output.py`. This will translated that nonreadable file into human format.
 
 <sub>Note: I will implement this step after I can prove my AMPL code can actually work :(</sub>
