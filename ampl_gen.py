@@ -70,9 +70,14 @@ newline(datfile)
 newline(modfile)
 
 # declare variables and parameters
+# if the teachers are first or second year (else = not associate)
+modfile.write('param SNR {TEACHER, 1..2};\n')
+newline(modfile)
+# only one Y per student = 1, rest = 0, denote what session hes in
+modfile.write('var Y {DAY, SESSION, STUDENT} binary;\n')
 modfile.write('var X {DAY, SESSION, STUDENT, TEACHER} binary;\n')
 newline(modfile)
-modfile.write('minimize CONST\n\t1;\n')
+modfile.write('minimize CONST:\n\t1;\n')
 newline(modfile)
 
 # legend: v%d%i%p%s

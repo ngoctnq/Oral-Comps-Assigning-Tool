@@ -1,0 +1,5 @@
+model mock.mod;
+data mock.dat;
+solve;
+
+display X >output;

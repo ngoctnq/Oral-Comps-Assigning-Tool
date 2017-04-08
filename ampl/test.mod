@@ -1,9 +1,9 @@
 set STUDENT;
 set TEACHER;
-set MAT;
-set CSC;
-set PHY;
-set CHE;
+set DEPT0;
+set DEPT1;
+set DEPT2;
+set DEPT3;
 
 var X {STUDENT, TEACHER} binary;
 

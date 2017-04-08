@@ -2,4 +2,4 @@ model test.mod;
 data test.dat;
 solve;
 
-display {i in STUDENT, j in TEACHER} X[i,j] >output;
+display X >output;
