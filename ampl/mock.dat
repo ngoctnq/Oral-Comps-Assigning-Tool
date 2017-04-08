@@ -1,7 +1,7 @@
 data;
 
-set DAY := 0 1;
-set SESSION := 0 1 2;
+param DAY := 2;
+param SESSION := 3;
 set STUDENT := 0 1 2 3 4 5 6 7 8;
 set TEACHER := 0 1 2 3 4;
 set DEPT0 := 0 1;

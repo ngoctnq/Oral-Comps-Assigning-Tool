@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 '''
-Oral Comprehensive Assigning Tool
-MAT-226 Final Project
-'''
+    Oral Comprehensive Assigning Tool
+    MAT-226 Final Project
+    '''
 # imports
 import init
 
@@ -20,7 +20,7 @@ def newline(f):
 
 # initializations
 # st = students DataFrame
-# ID, Mj1, Mj2, Mn
+# ID, Mj, Mn
 # ts = teachers DataFrame
 # ID, DP, 1Y, 2Y
 st, ts = init.import_data()
@@ -33,19 +33,14 @@ t_count = 5 # number of teachers
 d_count = 2 # number of days
 i_count = 3 # number of sesh/day
 depts_c = 4 # number of depts
+maxpday = 2 # max no of sesh/day
 
 datfile.write('data;\n\n')
 # days and sessions
-modfile.write('set DAY;\n')
-datfile.write('set DAY :=')
-for i in range(d_count):
-    datfile.write(' ' + str(i))
-datfile.write(';\n')
-modfile.write('set SESSION;\n')
-datfile.write('set SESSION :=')
-for i in range(i_count):
-    datfile.write(' ' + str(i))
-datfile.write(';\n')
+modfile.write('param DAY;\n')
+datfile.write('param DAY := '+ str(d_count) +';\n')
+modfile.write('param SESSION;\n')
+datfile.write('param SESSION := '+ str(i_count) +';\n')
 
 # initial student/teacher set
 modfile.write('set STUDENT;\nset TEACHER;\n')
@@ -71,11 +66,21 @@ newline(modfile)
 
 # declare variables and parameters
 # if the teachers are first or second year (else = not associate)
-modfile.write('param SNR {TEACHER, 1..2};\n')
+# TODO import actual profs' profile
+modfile.write('param SNR {TEACHER, 1..2} binary\n\tdefault 0;\n')
 newline(modfile)
+# datfile.write('param SNR {i in TEACHER, j in 1..2} = 0;\n')
+# newline(datfile)
+
+# if the teacher are free sometimes
+# TODO import actual prof's schedule
+modfile.write('param BUSY {1..DAY, 1..SESSION, TEACHER} binary\n\tdefault 0;\n')
+
 # only one Y per student = 1, rest = 0, denote what session hes in
-modfile.write('var Y {DAY, SESSION, STUDENT} binary;\n')
-modfile.write('var X {DAY, SESSION, STUDENT, TEACHER} binary;\n')
+modfile.write('var Y {1..DAY, 1..SESSION, STUDENT} binary;\n')
+# only 3/4 Cs per student, denoting number of chairs of a student
+modfile.write('var C {TEACHER, STUDENT} binary;\n')
+modfile.write('var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;\n')
 newline(modfile)
 modfile.write('minimize CONST:\n\t1;\n')
 newline(modfile)
@@ -86,33 +91,91 @@ newline(modfile)
     # %p: professor ID
     # %s: student ID
 
-# no same timeslot for a teacher
-# for each prof
-# for l in range(t_count):
-#     # everyday
-#     for i in range(d_count):
-#         # for each session
-#         for j in range(i_count):
-#             # for each student
-#             for k in range(s_count):
-#                 # no same timeslot
-#                 modfile.write('v'+frmt(i)+frmt(j)+frmt(k)+frmt(l)+' + ')
-#     modfile.write('0 <= 1;\n')
+# each student has exactly one timeslot
+modfile.write('subject to Student_Timeslot_Binary {l in STUDENT}:\n\t')
+modfile.write('sum {i in 1..DAY, j in 1..SESSION} Y[i,j,l] = 1;\n')
+modfile.write('subject to Student_Timeslot_Count {i in 1..DAY, j in 1..SESSION, l in STUDENT}:\n\t')
+modfile.write('sum {k in TEACHER} X[i,j,k,l] = 3 * Y[i,j,l];\n')
 
-# exact 1 timeslots/3 profs for a student
-# for each student
-# for k in range(s_count):
-#     # everyday
-#     for i in range(d_count):
-#         # for each session
-#         for j in range(i_count):
-#             # for each prof
-#             for l in range(t_count):
-#                 # exactly 3 profs
-#                 modfile.write('v'+frmt(i)+frmt(j)+frmt(k)+frmt(l)+' + ')
-#     modfile.write('0 = 3;\n')
+# teacher only appear at one place anytime
+modfile.write('subject to Teacher_Clone_Jutsu {i in 1..DAY, j in 1..SESSION, k in TEACHER}:\n\t')
+modfile.write('sum {l in STUDENT} X[i,j,k,l] <= 1;\n')
 
-# each student field has exactly one teacher
+# no consecutive sessions
+modfile.write('subject to Prof_No_Consecutive_Sesh {k in TEACHER}:\n\t')
+modfile.write('sum {i in 1..DAY, j in 1..SESSION-1, l in STUDENT} (X[i,j,k,l] + X[i,j+1,k,l]) <= 1;\n')
+
+# at most $maxpday seshs per day per professor
+modfile.write('subject to Prof_Max_Per_Day {i in 1..DAY, k in TEACHER}:\n\t')
+modfile.write('sum {j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= '+ str(maxpday) + ';\n')
+
+# profs cannot attend if busy *taps head meme*
+# TODO cannot be optimized as sum of products equal zero
+modfile.write('subject to Prof_Is_Busy {i in 1..DAY, j in 1..SESSION, k in TEACHER}:\n\t')
+modfile.write('BUSY[i,j,k] * sum {l in STUDENT} X[i,j,k,l] = 0;\n')
+
+# define C - denoting if a prof is a student chair
+modfile.write('subject to Is_Prof_Student_Pair {k in TEACHER, l in STUDENT}:\n\t')
+modfile.write('sum {i in 1..DAY, j in 1..SESSION} X[i,j,k,l] = C[k,l];\n')
+
+# cache major/minor list of students
+major = []
+minor = []
+for i in range(s_count):
+    major.append([])
+    minor.append([])
+    major_list = str(st.get_value(i, 'Mj'))
+    minor_list = str(st.get_value(i, 'Mn'))
+    if minor_list == 'nan':
+        minor_list = ''
+    major[i] = major_list.split(',')
+    for j in range(len(major[i])):
+        if major[i][j] != '':
+            major[i][j] = str(int(float(major[i][j])))
+        else:
+            del major[i][j]
+    minor[i] = minor_list.split(',')
+    for j in range(len(minor[i])):
+        if minor[i][j] != '':
+            minor[i][j] = str(int(float(minor[i][j])))
+        else:
+            del minor[i][j]
+
+# department oral chair
+for i in range(s_count):
+    mj_c = len(major[i])
+    # sick em on da majors
+    # NOTE WOULD ALREADY INCLUDE A 3RD POSSIBLE MAJOR
+    for j in range(mj_c):
+        modfile.write('subject to Prof_Student_' + str(i) + '_Dept_' + str(major[i][j])
+            + ' {k in DEPT' + str(major[i][j]) + '}:\n\t')
+        modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;\n')
+    # if only one major -> u hab da minor
+    mn_c = len(minor[i])
+    if mj_c == 1:
+        modfile.write('subject to Prof_Student_' + str(i) + '_Minor {k in ')
+        if mn_c > 1:
+            modfile.write('(')
+        modfile.write('DEPT' + str(minor[i][0]))
+        if mn_c > 1:
+            for j in range(1,mn_c):
+                modfile.write(' union DEPT' + str(minor[i][j]))
+            modfile.write(')')
+        modfile.write('}:\n\t')
+        modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;\n')
+    else:
+        # you will always have 1 at-large regardless of no of Maj/min
+        modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge {k in (TEACHER')
+        for j in range(1,mj_c):
+            modfile.write(' diff DEPT' + str(major[i][j]))
+        for j in range(1,mn_c):
+            modfile.write(' diff DEPT' + str(minor[i][j]))
+        modfile.write(')}:\n\t')
+        modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;\n')
+
+# not all new major chair
+
+# if 2nd yr major chair -> no new anythin
 
 modfile.close()
 datfile.close()
