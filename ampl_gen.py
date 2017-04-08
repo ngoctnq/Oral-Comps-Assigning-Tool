@@ -23,13 +23,13 @@ def newline(f):
 # ID, Mj, Mn
 # ts = teachers DataFrame
 # ID, DP, 1Y, 2Y
-st, ts = init.import_data()
+st, ts = init.import_data('mock1')
 modfile = open('ampl/mock.mod', 'w')
 datfile = open('ampl/mock.dat', 'w')
 
 # cache
-s_count = 9 # number of students
-t_count = 5 # number of teachers
+s_count = len(st) # number of students
+t_count = len(ts) # number of teachers
 d_count = 2 # number of days
 i_count = 3 # number of sesh/day
 depts_c = 4 # number of depts
@@ -147,33 +147,35 @@ for i in range(s_count):
     # sick em on da majors
     # NOTE WOULD ALREADY INCLUDE A 3RD POSSIBLE MAJOR
     for j in range(mj_c):
-        modfile.write('subject to Prof_Student_' + str(i) + '_Dept_' + str(major[i][j])
-            + ' {k in DEPT' + str(major[i][j]) + '}:\n\t')
-        modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;\n')
+        modfile.write('subject to Prof_Student_' + str(i) + '_Dept_' + str(major[i][j]) + ':\n\t')
+        modfile.write('sum {i in 1..DAY, j in 1..SESSION, k in DEPT' + str(major[i][j]) +
+            '} X[i,j,k,' + str(i) + '] = 1;\n')
     # if only one major -> u hab da minor
     mn_c = len(minor[i])
     if mj_c == 1:
-        modfile.write('subject to Prof_Student_' + str(i) + '_Minor {k in ')
+        modfile.write('subject to Prof_Student_' + str(i) + '_Minor:\n\t')
+        modfile.write('sum {i in 1..DAY, j in 1..SESSION, k in ')
         if mn_c > 1:
             modfile.write('(')
         modfile.write('DEPT' + str(minor[i][0]))
         if mn_c > 1:
-            for j in range(1,mn_c):
+            for j in range(mn_c):
                 modfile.write(' union DEPT' + str(minor[i][j]))
             modfile.write(')')
-        modfile.write('}:\n\t')
-        modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;\n')
-    else:
-        # you will always have 1 at-large regardless of no of Maj/min
-        modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge {k in (TEACHER')
-        for j in range(1,mj_c):
-            modfile.write(' diff DEPT' + str(major[i][j]))
-        for j in range(1,mn_c):
-            modfile.write(' diff DEPT' + str(minor[i][j]))
-        modfile.write(')}:\n\t')
-        modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;\n')
+        modfile.write('} X[i,j,k,' + str(i) + '] = 1;\n')
+    # you will always have 1 at-large regardless of no of Maj/min
+    modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge:\n\t')
+    modfile.write('sum {i in 1..DAY, j in 1..SESSION, k in (TEACHER')
+    for j in range(mj_c):
+        modfile.write(' diff DEPT' + str(major[i][j]))
+    for j in range(mn_c):
+        modfile.write(' diff DEPT' + str(minor[i][j]))
+    modfile.write(')} X[i,j,k,' + str(i) + '] = 1;\n')
 
 # not all new major chair
+# for l in range(s_count):
+#     modfile.write('subject to No_New_Major_Board_Student_' + str(l) + ':\n\t')
+#     modfile.write('sum {i in 1..DAY, j in 1..SESSION, k in ' + '} X[i,j,k,' + str(l) + '] = C[k,l];\n')
 
 # if 2nd yr major chair -> no new anythin
 

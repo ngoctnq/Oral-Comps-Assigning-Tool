@@ -33,47 +33,21 @@ subject to Prof_Is_Busy {i in 1..DAY, j in 1..SESSION, k in TEACHER}:
 	BUSY[i,j,k] * sum {l in STUDENT} X[i,j,k,l] = 0;
 subject to Is_Prof_Student_Pair {k in TEACHER, l in STUDENT}:
 	sum {i in 1..DAY, j in 1..SESSION} X[i,j,k,l] = C[k,l];
-subject to Prof_Student_0_Dept_0 {k in DEPT0}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_0_Dept_2 {k in DEPT2}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_0_AtLarge {k in (TEACHER diff DEPT2)}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_1_Dept_0 {k in DEPT0}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_1_Minor {k in (DEPT1 union DEPT2)}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_2_Dept_3 {k in DEPT3}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_2_Dept_2 {k in DEPT2}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_2_AtLarge {k in (TEACHER diff DEPT2)}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_3_Dept_0 {k in DEPT0}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_3_Dept_3 {k in DEPT3}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_3_AtLarge {k in (TEACHER diff DEPT3)}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_4_Dept_3 {k in DEPT3}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_4_Minor {k in (DEPT0 union DEPT1)}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_5_Dept_3 {k in DEPT3}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_5_Dept_0 {k in DEPT0}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_5_AtLarge {k in (TEACHER diff DEPT0)}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_6_Dept_0 {k in DEPT0}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_6_Minor {k in DEPT2}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_7_Dept_2 {k in DEPT2}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_7_Minor {k in DEPT1}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_8_Dept_1 {k in DEPT1}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
-subject to Prof_Student_8_Minor {k in DEPT2}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] = 1;
+subject to Prof_Student_0_Dept_1:
+	sum {i in 1..DAY, j in 1..SESSION, k in DEPT1} X[i,j,k,0] = 1;
+subject to Prof_Student_0_Minor:
+	sum {i in 1..DAY, j in 1..SESSION, k in DEPT2} X[i,j,k,0] = 1;
+subject to Prof_Student_0_AtLarge:
+	sum {i in 1..DAY, j in 1..SESSION, k in (TEACHER diff DEPT1 diff DEPT2)} X[i,j,k,0] = 1;
+subject to Prof_Student_1_Dept_0:
+	sum {i in 1..DAY, j in 1..SESSION, k in DEPT0} X[i,j,k,1] = 1;
+subject to Prof_Student_1_Minor:
+	sum {i in 1..DAY, j in 1..SESSION, k in DEPT1} X[i,j,k,1] = 1;
+subject to Prof_Student_1_AtLarge:
+	sum {i in 1..DAY, j in 1..SESSION, k in (TEACHER diff DEPT0 diff DEPT1)} X[i,j,k,1] = 1;
+subject to Prof_Student_2_Dept_0:
+	sum {i in 1..DAY, j in 1..SESSION, k in DEPT0} X[i,j,k,2] = 1;
+subject to Prof_Student_2_Dept_1:
+	sum {i in 1..DAY, j in 1..SESSION, k in DEPT1} X[i,j,k,2] = 1;
+subject to Prof_Student_2_AtLarge:
+	sum {i in 1..DAY, j in 1..SESSION, k in (TEACHER diff DEPT0 diff DEPT1)} X[i,j,k,2] = 1;
