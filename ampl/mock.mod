@@ -16,8 +16,7 @@ var Y {1..DAY, 1..SESSION, STUDENT} binary;
 var C {TEACHER, STUDENT} binary;
 var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;
 
-minimize CONST:
-	1;
+minimize CONST: 1;
 
 subject to Student_Timeslot_Binary {l in STUDENT}:
 	sum {i in 1..DAY, j in 1..SESSION} Y[i,j,l] = 1;
@@ -25,8 +24,8 @@ subject to Student_Timeslot_Count {i in 1..DAY, j in 1..SESSION, l in STUDENT}:
 	sum {k in TEACHER} X[i,j,k,l] = 3 * Y[i,j,l];
 subject to Teacher_Clone_Jutsu {i in 1..DAY, j in 1..SESSION, k in TEACHER}:
 	sum {l in STUDENT} X[i,j,k,l] <= 1;
-subject to Prof_No_Consecutive_Sesh {k in TEACHER}:
-	sum {i in 1..DAY, j in 1..SESSION-1, l in STUDENT} (X[i,j,k,l] + X[i,j+1,k,l]) <= 1;
+subject to Prof_No_Consecutive_Sesh {i in 1..DAY, j in 1..SESSION-1, k in TEACHER}:
+	sum {l in STUDENT} (X[i,j,k,l] + X[i,j+1,k,l]) <= 1;
 subject to Prof_Max_Per_Day {i in 1..DAY, k in TEACHER}:
 	sum {j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= 2;
 subject to Prof_Is_Busy {i in 1..DAY, j in 1..SESSION, k in TEACHER}:

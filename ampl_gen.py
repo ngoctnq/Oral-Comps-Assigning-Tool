@@ -67,6 +67,7 @@ newline(modfile)
 # declare variables and parameters
 # if the teachers are first or second year (else = not associate)
 # TODO import actual profs' profile
+# HACK disabled nonfunctional params
 modfile.write('param SNR {TEACHER, 1..2} binary\n\tdefault 0;\n')
 newline(modfile)
 # datfile.write('param SNR {i in TEACHER, j in 1..2} = 0;\n')
@@ -74,6 +75,7 @@ newline(modfile)
 
 # if the teacher are free sometimes
 # TODO import actual prof's schedule
+# HACK disabled nonfunctional params
 modfile.write('param BUSY {1..DAY, 1..SESSION, TEACHER} binary\n\tdefault 0;\n')
 
 # only one Y per student = 1, rest = 0, denote what session hes in
@@ -82,7 +84,7 @@ modfile.write('var Y {1..DAY, 1..SESSION, STUDENT} binary;\n')
 modfile.write('var C {TEACHER, STUDENT} binary;\n')
 modfile.write('var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;\n')
 newline(modfile)
-modfile.write('minimize CONST:\n\t1;\n')
+modfile.write('minimize CONST: 1;\n')
 newline(modfile)
 
 # legend: v%d%i%p%s
@@ -102,8 +104,8 @@ modfile.write('subject to Teacher_Clone_Jutsu {i in 1..DAY, j in 1..SESSION, k i
 modfile.write('sum {l in STUDENT} X[i,j,k,l] <= 1;\n')
 
 # no consecutive sessions
-modfile.write('subject to Prof_No_Consecutive_Sesh {k in TEACHER}:\n\t')
-modfile.write('sum {i in 1..DAY, j in 1..SESSION-1, l in STUDENT} (X[i,j,k,l] + X[i,j+1,k,l]) <= 1;\n')
+modfile.write('subject to Prof_No_Consecutive_Sesh {i in 1..DAY, j in 1..SESSION-1, k in TEACHER}:\n\t')
+modfile.write('sum {l in STUDENT} (X[i,j,k,l] + X[i,j+1,k,l]) <= 1;\n')
 
 # at most $maxpday seshs per day per professor
 modfile.write('subject to Prof_Max_Per_Day {i in 1..DAY, k in TEACHER}:\n\t')
@@ -111,6 +113,7 @@ modfile.write('sum {j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= '+ str(maxpday)
 
 # profs cannot attend if busy *taps head meme*
 # TODO cannot be optimized as sum of products equal zero
+# HACK disabled to test linearity
 modfile.write('subject to Prof_Is_Busy {i in 1..DAY, j in 1..SESSION, k in TEACHER}:\n\t')
 modfile.write('BUSY[i,j,k] * sum {l in STUDENT} X[i,j,k,l] = 0;\n')
 

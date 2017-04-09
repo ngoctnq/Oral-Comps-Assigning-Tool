@@ -1,5 +1,18 @@
 model mock.mod;
 data mock.dat;
-solve;
 
-display X >output;
+option solver minos;
+solve;
+display X, Y >output;
+
+option solver cplex;
+solve;
+display X, Y >output_cplex;
+
+option solver gurobi;
+solve;
+display X, Y >output_gurobi;
+
+option solver xpress;
+solve;
+display X, Y >output_xpress;
