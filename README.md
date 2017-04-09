@@ -4,7 +4,9 @@ Assigning oral comprehensive exam chairs for Wabash seniors
 ## How it works:
 `init.py` takes in the two csv files and parse the data out - this serves as a connector to any data container and form. Then, `ampl_gen.py` takes in 2 pandas DataFrame and yield a AMPL script. Finally, use AMPL/AMPLIDE to solve the file - it's a complete BIP problem, not completely linear however.
 
-When use AMPL(IDE), if the last nonlinear contraint is not included, any of the following solver is viable: CPLEX, Gurobi, Xpress, LocalSolver, BARON. However, with the nonlinear constraint, among the above, only LocalSolver works. I have not tried other solvers, so feel free to test things out.
+<s>When use AMPL(IDE), if the last nonlinear contraint is not included, any of the following solver is viable: CPLEX, Gurobi, Xpress, LocalSolver, BARON. However, with the nonlinear constraint, among the above, only LocalSolver works. I have not tried other solvers, so feel free to test things out.</s>
+
+EDIT: Set `LOGICAL_FLAG = False` - this gives a full arithmetic constraint, and the previous solvers work - magically.
 
 ## Howto:
 <i>Step 0:</i> Open Terminal and run `git clone https://github.com/ngoctnq/Oral-Comps-Assigning-Tool.git`. The file is made so that you can run on any Mac at the school and be good to go.

@@ -66,8 +66,6 @@ subject to No_New_Major_Board_Student_1:
 subject to No_New_Major_Board_Student_2:
 	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] < 2;
 subject to Maj_Prof_2ndYr_Then_No_New_0:
-	(numberof 1 in ({k in TEACHER, i in 1..1} P[k,0,i]) > 0) or (numberof 1 in ({k in TEACHER, i in 1..4} P[k,0,i]) = 0);
-subject to Maj_Prof_2ndYr_Then_No_New_1:
-	(numberof 1 in ({k in TEACHER, i in 1..1} P[k,1,i]) > 0) or (numberof 1 in ({k in TEACHER, i in 1..4} P[k,1,i]) = 0);
-subject to Maj_Prof_2ndYr_Then_No_New_2:
-	(numberof 1 in ({k in TEACHER, i in 1..2} P[k,2,i]) > 0) or (numberof 1 in ({k in TEACHER, i in 1..4} P[k,2,i]) = 0);
+	(sum {k in TEACHER, i in 1..4} (P[k,0,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,0,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;subject to Maj_Prof_2ndYr_Then_No_New_1:
+	(sum {k in TEACHER, i in 1..4} (P[k,1,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,1,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;subject to Maj_Prof_2ndYr_Then_No_New_2:
+	(sum {k in TEACHER, i in 1..4} (P[k,2,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,2,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,2,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;

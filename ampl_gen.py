@@ -6,6 +6,8 @@
 # imports
 import init
 
+LOGICAL_FLAG = False
+
 def frmt(i):
     '''
     Format a number into a string (with zero-padding, for eg)
@@ -201,14 +203,26 @@ for l in range(s_count):
     modfile.write('sum {k in TEACHER, l in STUDENT, i in 1..' + str(mj_c) + '} P[k,l,i] * SNR[k,1] < ' + str(mj_c) + ';\n')
 
 # if 2nd yr major chair -> no new anythin
-for l in range(s_count):
-    mj_c = len(major[l])
-    modfile.write('subject to Maj_Prof_2ndYr_Then_No_New_' + str(l) + ':\n\t')
-    # either there is a 3rd yr prof in the majors
-    modfile.write('(numberof 1 in ({k in TEACHER, i in 1..' + str(mj_c) + '} P[k,' + str(l) + ',i]) > 0) or ')
-    # or there must be no first year
-    modfile.write('(numberof 1 in ({k in TEACHER, i in 1..4} P[k,' + str(l) + ',i]) = 0);')
-    newline(modfile)
+# if use AMPL logic flags
+if LOGICAL_FLAG:
+    for l in range(s_count):
+        mj_c = len(major[l])
+        modfile.write('subject to Maj_Prof_2ndYr_Then_No_New_' + str(l) + ':\n\t')
+        # either there is a 3rd yr prof in the majors
+        modfile.write('(numberof 1 in ({k in TEACHER, i in 1..' + str(mj_c) + '} P[k,' + str(l) + ',i]) > 0) or ')
+        # or there must be no first year
+        modfile.write('(numberof 1 in ({k in TEACHER, i in 1..4} (P[k,' + str(l) + ',i] * SNR[k,1])) = 0);')
+        newline(modfile)
+else:
+    for l in range(s_count):
+        mj_c = len(major[l])
+        modfile.write('subject to Maj_Prof_2ndYr_Then_No_New_' + str(l) + ':\n\t')
+        # either there is no first year (then the sum = 0)
+        modfile.write('(sum {k in TEACHER, i in 1..4} (P[k,' + str(l) + ',i] * SNR[k,1]))')
+        # or there is a 3rd year mj
+        for i in range(mj_c):
+            modfile.write(' * (product {k in TEACHER} (P[k,' + str(l) + ',' + str(i + 1) + '] - SNR[k,1] - SNR[k,2] - 1))')
+        modfile.write(' = 0;')
 
 modfile.close()
 datfile.close()
