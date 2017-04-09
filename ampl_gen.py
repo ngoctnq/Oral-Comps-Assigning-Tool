@@ -128,6 +128,17 @@ modfile.write('BUSY[i,j,k] * sum {l in STUDENT} X[i,j,k,l] = 0;\n')
 modfile.write('subject to Is_Prof_Student_Pair {k in TEACHER, l in STUDENT}:\n\t')
 modfile.write('sum {i in 1..DAY, j in 1..SESSION} X[i,j,k,l] = C[k,l];\n')
 
+# integrity of P
+# NOTE unlikely would need this, so delete if too many constraint
+modfile.write('subject to Integrity_P_Nontriple {l in STUDENT, i in 1..3}:\n\t')
+modfile.write('sum {k in TEACHER} P[k,l,i] = 1;\n')
+modfile.write('subject to Integrity_P_Triple {l in STUDENT}:\n\t')
+modfile.write('sum {k in TEACHER} P[k,l,4] <= 1;\n')
+
+# timeslot of Ps
+modfile.write('subject to Prof_Student_Timeslot {k in TEACHER, l in STUDENT}:\n\t')
+modfile.write('sum {i in 1..DAY, j in 1..SESSION} X[i,j,k,l] = sum {i in 1..4} P[k,l,i];\n')
+
 # cache major/minor list of students
 major = []
 minor = []
@@ -158,17 +169,14 @@ for i in range(s_count):
     # NOTE WOULD ALREADY INCLUDE A 3RD POSSIBLE MAJOR
     for j in range(mj_c):
         modfile.write('subject to Prof_Student_' + str(i) + '_Dept_' + str(major[i][j]) + ':\n\t')
-        modfile.write('sum {i in 1..DAY, j in 1..SESSION, k in DEPT' + str(major[i][j]) +
-            '} X[i,j,k,' + str(i) + '] = 1;\n')
-        # TODO def C
-        # modfile.write('subject to Prof_Student_No_' + str(j) + ':\n\t')
-        # modfile.write('sum {k in DEPT' + str(major[i][j]) + '} C[k, ' + str(i) +
-        #     '] = P[k,' + str(i) + ',' + str(j + 1) + '];\n')
+        modfile.write('sum {k in DEPT' + str(major[i][j]) + '} P[k,' +
+            str(i) + ',' + str(j+1) + '] = 1;\n')
+
     # if only one major -> u hab da minor
     mn_c = len(minor[i])
     if mj_c == 1:
         modfile.write('subject to Prof_Student_' + str(i) + '_Minor:\n\t')
-        modfile.write('sum {i in 1..DAY, j in 1..SESSION, k in ')
+        modfile.write('sum {k in ')
         if mn_c > 1:
             modfile.write('(')
         modfile.write('DEPT' + str(minor[i][0]))
@@ -176,25 +184,25 @@ for i in range(s_count):
             for j in range(mn_c):
                 modfile.write(' union DEPT' + str(minor[i][j]))
             modfile.write(')')
-        modfile.write('} X[i,j,k,' + str(i) + '] = 1;\n')
-        # TODO def C
-        # modfile.write('subject to Prof_Student_No_2:\n\t')
-        # modfile.write('sum {k in DEPT' + str(major[i][j]) + '} C[k] = P[k,' + str(i) + '2];\n')
+        modfile.write('} P[k,' + str(i) + ',2] = 1;\n')
     # you will always have 1 at-large regardless of no of Maj/min
     modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge:\n\t')
-    modfile.write('sum {i in 1..DAY, j in 1..SESSION, k in (TEACHER')
+    modfile.write('sum {k in (TEACHER')
     for j in range(mj_c):
         modfile.write(' diff DEPT' + str(major[i][j]))
     for j in range(mn_c):
         modfile.write(' diff DEPT' + str(minor[i][j]))
-    modfile.write(')} X[i,j,k,' + str(i) + '] = 1;\n')
+    modfile.write(')} P[k,' + str(i) + ',3 + TRIPLE[' + str(i) + ']] = 1;\n')
 
 # not all new major chair
-# for l in range(s_count):
-#     modfile.write('subject to No_New_Major_Board_Student_' + str(l) + ':\n\t')
-#     modfile.write('sum {i in 1..DAY, j in 1..SESSION, k in ' + '} X[i,j,k,' + str(l) + '] = C[k,l];\n')
+for l in range(s_count):
+    mj_c = len(major[l])
+    modfile.write('subject to No_New_Major_Board_Student_' + str(l) + ':\n\t')
+    modfile.write('sum {k in TEACHER, l in STUDENT, i in 1..' + str(mj_c) + '} P[k,l,i] * SNR[k,1] < ' + str(mj_c) + ';\n')
 
 # if 2nd yr major chair -> no new anythin
+# modfile.write('subject to Maj_Prof_2ndYr_Then_No_New {l in STUDENT}:\n\t')
+# modfile.write('product {}')
 
 modfile.close()
 datfile.close()

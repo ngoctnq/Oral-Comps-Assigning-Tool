@@ -3,16 +3,30 @@ data mock.dat;
 
 option solver minos;
 solve;
-display X, Y >output;
+display P >output;
+display Y >output;
 
 option solver cplex;
 solve;
-display X, Y >output_cplex;
+display P >output_cplex;
+display Y >output_cplex;
 
 option solver gurobi;
 solve;
-display X, Y >output_gurobi;
+display P >output_gurobi;
+display Y >output_gurobi;
 
 option solver xpress;
 solve;
-display X, Y >output_xpress;
+display P >output_xpress;
+display Y >output_xpress;
+
+option solver locsol;
+solve;
+display P >output_locsol;
+display Y >output_locsol;
+
+option solver baron;
+solve;
+display P >output_baron;
+display Y >output_baron;

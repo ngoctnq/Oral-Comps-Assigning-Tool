@@ -35,21 +35,33 @@ subject to Prof_Is_Busy {i in 1..DAY, j in 1..SESSION, k in TEACHER}:
 	BUSY[i,j,k] * sum {l in STUDENT} X[i,j,k,l] = 0;
 subject to Is_Prof_Student_Pair {k in TEACHER, l in STUDENT}:
 	sum {i in 1..DAY, j in 1..SESSION} X[i,j,k,l] = C[k,l];
+subject to Integrity_P_Nontriple {l in STUDENT, i in 1..3}:
+	sum {k in TEACHER} P[k,l,i] = 1;
+subject to Integrity_P_Triple {l in STUDENT}:
+	sum {k in TEACHER} P[k,l,4] <= 1;
+subject to Prof_Student_Timeslot {k in TEACHER, l in STUDENT}:
+	sum {i in 1..DAY, j in 1..SESSION} X[i,j,k,l] = sum {i in 1..4} P[k,l,i];
 subject to Prof_Student_0_Dept_1:
-	sum {i in 1..DAY, j in 1..SESSION, k in DEPT1} X[i,j,k,0] = 1;
+	sum {k in DEPT1} P[k,0,1] = 1;
 subject to Prof_Student_0_Minor:
-	sum {i in 1..DAY, j in 1..SESSION, k in DEPT2} X[i,j,k,0] = 1;
+	sum {k in DEPT2} P[k,0,2] = 1;
 subject to Prof_Student_0_AtLarge:
-	sum {i in 1..DAY, j in 1..SESSION, k in (TEACHER diff DEPT1 diff DEPT2)} X[i,j,k,0] = 1;
+	sum {k in (TEACHER diff DEPT1 diff DEPT2)} P[k,0,3 + TRIPLE[0]] = 1;
 subject to Prof_Student_1_Dept_0:
-	sum {i in 1..DAY, j in 1..SESSION, k in DEPT0} X[i,j,k,1] = 1;
+	sum {k in DEPT0} P[k,1,1] = 1;
 subject to Prof_Student_1_Minor:
-	sum {i in 1..DAY, j in 1..SESSION, k in DEPT1} X[i,j,k,1] = 1;
+	sum {k in DEPT1} P[k,1,2] = 1;
 subject to Prof_Student_1_AtLarge:
-	sum {i in 1..DAY, j in 1..SESSION, k in (TEACHER diff DEPT0 diff DEPT1)} X[i,j,k,1] = 1;
+	sum {k in (TEACHER diff DEPT0 diff DEPT1)} P[k,1,3 + TRIPLE[1]] = 1;
 subject to Prof_Student_2_Dept_0:
-	sum {i in 1..DAY, j in 1..SESSION, k in DEPT0} X[i,j,k,2] = 1;
+	sum {k in DEPT0} P[k,2,1] = 1;
 subject to Prof_Student_2_Dept_1:
-	sum {i in 1..DAY, j in 1..SESSION, k in DEPT1} X[i,j,k,2] = 1;
+	sum {k in DEPT1} P[k,2,2] = 1;
 subject to Prof_Student_2_AtLarge:
-	sum {i in 1..DAY, j in 1..SESSION, k in (TEACHER diff DEPT0 diff DEPT1)} X[i,j,k,2] = 1;
+	sum {k in (TEACHER diff DEPT0 diff DEPT1)} P[k,2,3 + TRIPLE[2]] = 1;
+subject to No_New_Major_Board_Student_0:
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] < 1;
+subject to No_New_Major_Board_Student_1:
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] < 1;
+subject to No_New_Major_Board_Student_2:
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] < 2;
