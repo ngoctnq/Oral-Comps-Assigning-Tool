@@ -27,3 +27,6 @@ to install <i>pip</i> and module dependencies. If you want to install the depend
 <i>Step ∞:</i> Run `./parse_output.py`. This will translated that nonreadable file into human format.
 
 <sup>Note: I will implement this step after I can prove my AMPL code can actually work :(</sup>
+
+## Known unhandled problems/edge cases
+- Does NOT work if someone has MORE than 3 majors.

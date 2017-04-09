@@ -23,7 +23,7 @@ def newline(f):
 # ID, Mj, Mn
 # ts = teachers DataFrame
 # ID, DP, 1Y, 2Y
-st, ts = init.import_data('mock0')
+st, ts = init.import_data('mock1')
 modfile = open('ampl/mock.mod', 'w')
 datfile = open('ampl/mock.dat', 'w')
 
@@ -78,6 +78,10 @@ newline(modfile)
 # HACK disabled nonfunctional params
 modfile.write('param BUSY {1..DAY, 1..SESSION, TEACHER} binary\n\tdefault 0;\n')
 
+# if the student has 3 majors
+# TODO import actual student major status
+modfile.write('param TRIPLE {STUDENT} binary\n\tdefault 0;\n')
+
 # only one Y per student = 1, rest = 0, denote what session hes in
 modfile.write('var Y {1..DAY, 1..SESSION, STUDENT} binary;\n')
 # only 3/4 Cs per student, denoting number of chairs of a student
@@ -97,7 +101,7 @@ newline(modfile)
 modfile.write('subject to Student_Timeslot_Binary {l in STUDENT}:\n\t')
 modfile.write('sum {i in 1..DAY, j in 1..SESSION} Y[i,j,l] = 1;\n')
 modfile.write('subject to Student_Timeslot_Count {i in 1..DAY, j in 1..SESSION, l in STUDENT}:\n\t')
-modfile.write('sum {k in TEACHER} X[i,j,k,l] = 3 * Y[i,j,l];\n')
+modfile.write('sum {k in TEACHER} X[i,j,k,l] = (3 + TRIPLE[l]) * Y[i,j,l];\n')
 
 # teacher only appear at one place anytime
 modfile.write('subject to Teacher_Clone_Jutsu {i in 1..DAY, j in 1..SESSION, k in TEACHER}:\n\t')
