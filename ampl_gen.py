@@ -69,7 +69,6 @@ newline(modfile)
 # declare variables and parameters
 # if the teachers are first or second year (else = not associate)
 # TODO import actual profs' profile
-# HACK disabled nonfunctional params
 modfile.write('param SNR {TEACHER, 1..2} binary\n\tdefault 0;\n')
 newline(modfile)
 # datfile.write('param SNR {i in TEACHER, j in 1..2} = 0;\n')
@@ -77,7 +76,6 @@ newline(modfile)
 
 # if the teacher are free sometimes
 # TODO import actual prof's schedule
-# HACK disabled nonfunctional params
 modfile.write('param BUSY {1..DAY, 1..SESSION, TEACHER} binary\n\tdefault 0;\n')
 
 # if the student has 3 majors
@@ -122,7 +120,6 @@ modfile.write('sum {j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= '+ str(maxpday)
 
 # profs cannot attend if busy *taps head meme*
 # TODO cannot be optimized as sum of products equal zero
-# HACK disabled to test linearity
 modfile.write('subject to Prof_Is_Busy {i in 1..DAY, j in 1..SESSION, k in TEACHER}:\n\t')
 modfile.write('BUSY[i,j,k] * sum {l in STUDENT} X[i,j,k,l] = 0;\n')
 
