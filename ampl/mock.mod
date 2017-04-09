@@ -65,3 +65,9 @@ subject to No_New_Major_Board_Student_1:
 	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] < 1;
 subject to No_New_Major_Board_Student_2:
 	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] < 2;
+subject to Maj_Prof_2ndYr_Then_No_New_0:
+	(numberof 1 in ({k in TEACHER, i in 1..1} P[k,0,i]) > 0) or (numberof 1 in ({k in TEACHER, i in 1..4} P[k,0,i]) = 0);
+subject to Maj_Prof_2ndYr_Then_No_New_1:
+	(numberof 1 in ({k in TEACHER, i in 1..1} P[k,1,i]) > 0) or (numberof 1 in ({k in TEACHER, i in 1..4} P[k,1,i]) = 0);
+subject to Maj_Prof_2ndYr_Then_No_New_2:
+	(numberof 1 in ({k in TEACHER, i in 1..2} P[k,2,i]) > 0) or (numberof 1 in ({k in TEACHER, i in 1..4} P[k,2,i]) = 0);

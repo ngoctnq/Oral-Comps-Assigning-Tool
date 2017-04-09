@@ -201,8 +201,14 @@ for l in range(s_count):
     modfile.write('sum {k in TEACHER, l in STUDENT, i in 1..' + str(mj_c) + '} P[k,l,i] * SNR[k,1] < ' + str(mj_c) + ';\n')
 
 # if 2nd yr major chair -> no new anythin
-# modfile.write('subject to Maj_Prof_2ndYr_Then_No_New {l in STUDENT}:\n\t')
-# modfile.write('product {}')
+for l in range(s_count):
+    mj_c = len(major[l])
+    modfile.write('subject to Maj_Prof_2ndYr_Then_No_New_' + str(l) + ':\n\t')
+    # either there is a 3rd yr prof in the majors
+    modfile.write('(numberof 1 in ({k in TEACHER, i in 1..' + str(mj_c) + '} P[k,' + str(l) + ',i]) > 0) or ')
+    # or there must be no first year
+    modfile.write('(numberof 1 in ({k in TEACHER, i in 1..4} P[k,' + str(l) + ',i]) = 0);')
+    newline(modfile)
 
 modfile.close()
 datfile.close()

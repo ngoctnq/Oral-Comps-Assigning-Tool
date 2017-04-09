@@ -1,11 +1,6 @@
 model mock.mod;
 data mock.dat;
 
-option solver minos;
-solve;
-display P >output;
-display Y >output;
-
 option solver cplex;
 solve;
 display P >output_cplex;
