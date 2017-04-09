@@ -12,8 +12,11 @@ param SNR {TEACHER, 1..2} binary
 
 param BUSY {1..DAY, 1..SESSION, TEACHER} binary
 	default 0;
+param TRIPLE {STUDENT} binary
+	default 0;
 var Y {1..DAY, 1..SESSION, STUDENT} binary;
 var C {TEACHER, STUDENT} binary;
+var P {TEACHER, STUDENT, 1..4} binary;
 var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;
 
 minimize CONST: 1;
@@ -21,7 +24,7 @@ minimize CONST: 1;
 subject to Student_Timeslot_Binary {l in STUDENT}:
 	sum {i in 1..DAY, j in 1..SESSION} Y[i,j,l] = 1;
 subject to Student_Timeslot_Count {i in 1..DAY, j in 1..SESSION, l in STUDENT}:
-	sum {k in TEACHER} X[i,j,k,l] = 3 * Y[i,j,l];
+	sum {k in TEACHER} X[i,j,k,l] = (3 + TRIPLE[l]) * Y[i,j,l];
 subject to Teacher_Clone_Jutsu {i in 1..DAY, j in 1..SESSION, k in TEACHER}:
 	sum {l in STUDENT} X[i,j,k,l] <= 1;
 subject to Prof_No_Consecutive_Sesh {i in 1..DAY, j in 1..SESSION-1, k in TEACHER}:

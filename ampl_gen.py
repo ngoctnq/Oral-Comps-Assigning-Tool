@@ -86,6 +86,9 @@ modfile.write('param TRIPLE {STUDENT} binary\n\tdefault 0;\n')
 modfile.write('var Y {1..DAY, 1..SESSION, STUDENT} binary;\n')
 # only 3/4 Cs per student, denoting number of chairs of a student
 modfile.write('var C {TEACHER, STUDENT} binary;\n')
+# the order of student's profs
+modfile.write('var P {TEACHER, STUDENT, 1..4} binary;\n')
+
 modfile.write('var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;\n')
 newline(modfile)
 modfile.write('minimize CONST: 1;\n')
@@ -157,6 +160,10 @@ for i in range(s_count):
         modfile.write('subject to Prof_Student_' + str(i) + '_Dept_' + str(major[i][j]) + ':\n\t')
         modfile.write('sum {i in 1..DAY, j in 1..SESSION, k in DEPT' + str(major[i][j]) +
             '} X[i,j,k,' + str(i) + '] = 1;\n')
+        # TODO def C
+        # modfile.write('subject to Prof_Student_No_' + str(j) + ':\n\t')
+        # modfile.write('sum {k in DEPT' + str(major[i][j]) + '} C[k, ' + str(i) +
+        #     '] = P[k,' + str(i) + ',' + str(j + 1) + '];\n')
     # if only one major -> u hab da minor
     mn_c = len(minor[i])
     if mj_c == 1:
@@ -170,6 +177,9 @@ for i in range(s_count):
                 modfile.write(' union DEPT' + str(minor[i][j]))
             modfile.write(')')
         modfile.write('} X[i,j,k,' + str(i) + '] = 1;\n')
+        # TODO def C
+        # modfile.write('subject to Prof_Student_No_2:\n\t')
+        # modfile.write('sum {k in DEPT' + str(major[i][j]) + '} C[k] = P[k,' + str(i) + '2];\n')
     # you will always have 1 at-large regardless of no of Maj/min
     modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge:\n\t')
     modfile.write('sum {i in 1..DAY, j in 1..SESSION, k in (TEACHER')
