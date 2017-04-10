@@ -8,12 +8,6 @@ import init
 
 LOGICAL_FLAG = False
 
-def frmt(i):
-    '''
-    Format a number into a string (with zero-padding, for eg)
-    '''
-    return str(i)
-
 def newline(f):
     '''
     Take a opened file stream and write a newline.
