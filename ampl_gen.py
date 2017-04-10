@@ -37,6 +37,29 @@ i_count = 3 # number of sesh/day
 depts_c = 4 # number of depts
 maxpday = 2 # max no of sesh/day
 
+# cache major/minor list of students
+major = []
+minor = []
+for i in range(s_count):
+    major.append([])
+    minor.append([])
+    major_list = str(st.get_value(i, 'Mj'))
+    minor_list = str(st.get_value(i, 'Mn'))
+    if minor_list == 'nan':
+        minor_list = ''
+    major[i] = major_list.split(',')
+    for j in range(len(major[i])):
+        if major[i][j] != '':
+            major[i][j] = str(int(float(major[i][j])))
+        else:
+            del major[i][j]
+    minor[i] = minor_list.split(',')
+    for j in range(len(minor[i])):
+        if minor[i][j] != '':
+            minor[i][j] = str(int(float(minor[i][j])))
+        else:
+            del minor[i][j]
+
 datfile.write('data;\n\n')
 # days and sessions
 modfile.write('param DAY;\n')
@@ -81,6 +104,21 @@ modfile.write('param BUSY {1..DAY, 1..SESSION, TEACHER} binary\n\tdefault 0;\n')
 # if the student has 3 majors
 # TODO import actual student major status
 modfile.write('param TRIPLE {STUDENT} binary\n\tdefault 0;\n')
+datfile.write('param TRIPLE :=')
+# for i in range(s_count):
+#     datfile.write('%5d' % i)
+# datfile.write(' :=\n')
+# datfile.write('             ')
+# for i in range(s_count):
+#     mj_c = len(major[i])
+#     j = 1 if (mj_c == 3) else 0
+#     datfile.write('%5d' % j)
+# datfile.write(' ;\n')
+for i in range(s_count):
+    mj_c = len(major[i])
+    if mj_c == 3:
+        datfile.write('\n%14d  %-2d' % (i, 1))
+datfile.write(';\n')
 
 # only one Y per student = 1, rest = 0, denote what session hes in
 modfile.write('var Y {1..DAY, 1..SESSION, STUDENT} binary;\n')
@@ -137,29 +175,6 @@ modfile.write('sum {k in TEACHER} P[k,l,4] <= 1;\n')
 # timeslot of Ps
 modfile.write('subject to Prof_Student_Timeslot {k in TEACHER, l in STUDENT}:\n\t')
 modfile.write('sum {i in 1..DAY, j in 1..SESSION} X[i,j,k,l] = sum {i in 1..4} P[k,l,i];\n')
-
-# cache major/minor list of students
-major = []
-minor = []
-for i in range(s_count):
-    major.append([])
-    minor.append([])
-    major_list = str(st.get_value(i, 'Mj'))
-    minor_list = str(st.get_value(i, 'Mn'))
-    if minor_list == 'nan':
-        minor_list = ''
-    major[i] = major_list.split(',')
-    for j in range(len(major[i])):
-        if major[i][j] != '':
-            major[i][j] = str(int(float(major[i][j])))
-        else:
-            del major[i][j]
-    minor[i] = minor_list.split(',')
-    for j in range(len(minor[i])):
-        if minor[i][j] != '':
-            minor[i][j] = str(int(float(minor[i][j])))
-        else:
-            del minor[i][j]
 
 # department oral chair
 for i in range(s_count):

@@ -57,15 +57,17 @@ subject to Prof_Student_2_Dept_0:
 	sum {k in DEPT0} P[k,2,1] = 1;
 subject to Prof_Student_2_Dept_1:
 	sum {k in DEPT1} P[k,2,2] = 1;
+subject to Prof_Student_2_Dept_2:
+	sum {k in DEPT2} P[k,2,3] = 1;
 subject to Prof_Student_2_AtLarge:
-	sum {k in (TEACHER diff DEPT0 diff DEPT1)} P[k,2,3 + TRIPLE[2]] = 1;
+	sum {k in (TEACHER diff DEPT0 diff DEPT1 diff DEPT2)} P[k,2,3 + TRIPLE[2]] = 1;
 subject to No_New_Major_Board_Student_0:
 	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] < 1;
 subject to No_New_Major_Board_Student_1:
 	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] < 1;
 subject to No_New_Major_Board_Student_2:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] < 2;
+	sum {k in TEACHER, l in STUDENT, i in 1..3} P[k,l,i] * SNR[k,1] < 3;
 subject to Maj_Prof_2ndYr_Then_No_New_0:
 	(sum {k in TEACHER, i in 1..4} (P[k,0,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,0,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;subject to Maj_Prof_2ndYr_Then_No_New_1:
 	(sum {k in TEACHER, i in 1..4} (P[k,1,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,1,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;subject to Maj_Prof_2ndYr_Then_No_New_2:
-	(sum {k in TEACHER, i in 1..4} (P[k,2,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,2,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,2,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 1..4} (P[k,2,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,2,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,2,2] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,2,3] - SNR[k,1] - SNR[k,2] - 1)) = 0;

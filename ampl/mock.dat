@@ -6,6 +6,8 @@ set STUDENT := 0 1 2;
 set TEACHER := 0 1 2 3;
 set DEPT0 := 0 1;
 set DEPT1 := 0 2;
-set DEPT2 := 0 1 2;
+set DEPT2 := 1 2;
 set DEPT3 := 3;
 
+param TRIPLE :=
+             2  1 ;
