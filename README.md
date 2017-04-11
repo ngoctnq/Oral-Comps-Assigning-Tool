@@ -24,7 +24,7 @@ The `LOGICAL_FLAG` denotes if the script is to create a problem with logical con
 cd Oral-Comps-Assigning-Tool
 ./main.sh
 ```
-<sub>Note: This script, by default, will not use superuser privilege, and thus only install python modules locally for the current user. If this is were to install globally, `sudo` it. If you know how to use virtualenv, please fork.</sub>
+<sub>Note: This script, by default, will not use superuser privilege, and thus only install python modules locally for the current user. If this is were to install globally, `sudo` it. If you know how to use `virtualenv`, please fork.</sub>
 
 <i> Step 2:</i>
 Voila. Do what you want with the new generated `schedule.csv`.
