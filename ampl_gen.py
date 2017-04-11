@@ -16,9 +16,9 @@ def newline(f):
 
 # initializations
 # st = students DataFrame
-# ID, Mj, Mn
+# ID, Mj, Mn, SID, NAME
 # ts = teachers DataFrame
-# ID, DP, 1Y, 2Y
+# ID, DP, 1Y, 2Y, SID, NAME
 st, ts = init.import_data('mock1')
 modfile = open('ampl/mock.mod', 'w')
 datfile = open('ampl/mock.dat', 'w')

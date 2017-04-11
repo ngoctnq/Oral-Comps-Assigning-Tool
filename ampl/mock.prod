@@ -1,0 +1,7 @@
+model mock.mod;
+data mock.dat;
+
+option solver "./gecode";
+solve;
+display P >p_data;
+display Y >y_data;

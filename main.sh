@@ -1,5 +1,8 @@
+# constant of directory
+CODE_DIR="/Users/ngoc/Documents/code/"
 LOC=""
 CHC=""
+
 if [[ $UID != 0 ]]; then
    echo "Right now you are in userland. You can rerun this with admin privilege to install package systemwide."
    printf "Proceed? (Y/N) "
@@ -28,4 +31,23 @@ python -m pip install -U pip $LOC
 # python -m pip install numpy $LOC
 # NumPy is a dependency of SciPy, so no need to uncomment the above
 # python -m pip install scipy $LOC
+
+# for DataFrame manipulation
 python -m pip install pandas $LOC
+
+# go to the actual directory
+cd $CODE_DIR"Oral-Comps-Assigning-Tool"
+
+# generate the ampl script
+python ampl_gen.py
+
+# run ampl
+cd ampl
+cp mock.* $CODE_DIR"amplide.macosx64"
+cd $CODE_DIR"amplide.macosx64"
+./ampl mock.prod
+cp *_data $CODE_DIR"Oral-Comps-Assigning-Tool/data"
+cd $CODE_DIR"Oral-Comps-Assigning-Tool"
+
+# parse the output out
+python parse_output.py
