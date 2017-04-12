@@ -61,8 +61,8 @@ for i in range(t_count):
     elif len(dp) == 1:
         row.append(dp[0])
     else:
-        row.append(str(dp)[1:-2].replace(' ',''))
-        
+        row.append(str(dp)[1:-1].replace(' ',''))
+    
     y1_t = str(ts.get_value(i,'First Year?'))
     if y1_t == 'nan':
         y1_t = str(ts.get_value(i,'Part Time?'))
