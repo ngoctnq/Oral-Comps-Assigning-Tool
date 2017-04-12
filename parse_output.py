@@ -62,14 +62,14 @@ for i in range(s_count):
     temp_data = p_data[0:t_count]
     tempDF = pd.Series(temp_data).str.split().apply(pd.Series)
     sid = st.get_value(i, 'SID')
-    row[0] = sid
+    row[0] = '%07d' % sid
     name = stud_sheet.loc[stud_sheet['Person Id'] == sid, 'Student Name'].values[0]
     row[1] = name
     for k in range(t_count):
         for l in range(1,5):
             if tempDF.get_value(k, l) == '1':
                 sid = ts.get_value(k, 'SID')
-                row[2 * l + 2] = sid
+                row[2 * l + 2] = '%07d' % sid
                 name = prof_sheet.loc[prof_sheet['Person Id'] == sid, 'Faculty Name'].values[0]
                 row[2 * l + 3] = name
                 break

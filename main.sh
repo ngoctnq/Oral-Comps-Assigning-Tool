@@ -39,10 +39,10 @@ python -m pip install xlrd $LOC
 cd $CODE_DIR"Oral-Comps-Assigning-Tool"
 
 # create initial csv
-python init.py
+python init.py "$1"
 
 # generate the ampl script
-python ampl_gen.py
+python ampl_gen.py "$1"
 
 # run ampl
 cd ampl

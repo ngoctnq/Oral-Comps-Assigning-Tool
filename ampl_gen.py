@@ -5,14 +5,16 @@
     '''
 # imports
 import tools
+import sys
 
+path = sys.argv[1] if len(sys.argv) > 1 else '2016.xlsx'
 LOGICAL_FLAG = False
 
 # initializations
 # st = students DataFrame
 # ID, SID, Mj, Mn
 # ts = teachers DataFrame
-# ID, SID, DP, 1Y, 2Y
+# ID, SID, DP, 1Y, 2Y, UB
 st, ts = tools.import_data('data')
 modfile = open('ampl/mock.mod', 'w')
 datfile = open('ampl/mock.dat', 'w')
@@ -22,7 +24,7 @@ s_count = len(st) # number of students
 t_count = len(ts) # number of teachers
 d_count = 3 # number of days
 i_count = 7 # number of sesh/day
-depts_c = len(tools.get_depts()) # number of depts
+depts_c = len(tools.get_depts(path)) # number of depts
 maxpday = 4 # max no of sesh/day
 
 # cache major/minor list of students
@@ -95,7 +97,6 @@ modfile.write('param BUSY {1..DAY, 1..SESSION, TEACHER} binary\n\tdefault 0;\n')
 modfile.write('param BUSZ {1..DAY, 1..SESSION, STUDENT} binary\n\tdefault 0;\n')
 
 # if the student has 3 majors
-# TODO import actual student major status
 modfile.write('param TRIPLE {STUDENT} binary\n\tdefault 0;\n')
 datfile.write('param TRIPLE :=')
 # for i in range(s_count):
