@@ -23,7 +23,6 @@ for i in range(3):
     date_list[i] = valid.get_value(i,'Comp Dates')
 for i in range(7):
     session_list[i] = valid.get_value(i,'Time Slots')
-print date_list, session_list
 
 st, ts = init.import_data()
 # number of student/professor
@@ -62,18 +61,20 @@ for i in range(s_count):
     del p_data[0:2]
     temp_data = p_data[0:t_count]
     tempDF = pd.Series(temp_data).str.split().apply(pd.Series)
-    row[0] = st.get_value(i, 'SID')
-    row[1] = st.get_value(i, 'NAME')
+    sid = st.get_value(i, 'SID')
+    row[0] = sid
+    name = stud_sheet.loc[stud_sheet['Person Id'] == sid, 'Student Name'].values[0]
+    row[1] = name
     for k in range(t_count):
         for l in range(1,5):
             if tempDF.get_value(k, l) == '1':
                 sid = ts.get_value(k, 'SID')
                 row[2 * l + 2] = sid
-                row[2 * l + 3] = prof_sheet[prof_sheet["Person ID"] == sid]
+                name = prof_sheet.loc[prof_sheet['Person Id'] == sid, 'Faculty Name'].values[0]
+                row[2 * l + 3] = name
                 break
     del p_data[0:t_count + 1]
     records.append(row)
-    print
 
 # packing em all in
 outDF = pd.DataFrame.from_records(records, columns=['Student ID', 'Student Name','Date','Timeslot',
@@ -82,4 +83,4 @@ outDF = pd.DataFrame.from_records(records, columns=['Student ID', 'Student Name'
 
 # export
 outDF.to_csv('schedule.csv', index=False)
-print 'Schedule written out to "schedule.csv", quitting...'
+print 'Schedule written out to "schedule.csv", Done!'
