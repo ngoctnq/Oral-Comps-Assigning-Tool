@@ -94,6 +94,7 @@ newline(modfile)
 # if the teacher are free sometimes
 # TODO import actual prof's schedule
 modfile.write('param BUSY {1..DAY, 1..SESSION, TEACHER} binary\n\tdefault 0;\n')
+modfile.write('param BUSZ {1..DAY, 1..SESSION, STUDENT} binary\n\tdefault 0;\n')
 
 # if the student has 3 majors
 # TODO import actual student major status
@@ -151,9 +152,11 @@ modfile.write('subject to Prof_Max_Per_Day {i in 1..DAY, k in TEACHER}:\n\t')
 modfile.write('sum {j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= '+ str(maxpday) + ';\n')
 
 # profs cannot attend if busy *taps head meme*
-# TODO cannot be optimized as sum of products equal zero
+# NOTE cannot be optimized as sum of products equal zero
 modfile.write('subject to Prof_Is_Busy {i in 1..DAY, j in 1..SESSION, k in TEACHER}:\n\t')
 modfile.write('BUSY[i,j,k] * sum {l in STUDENT} X[i,j,k,l] = 0;\n')
+modfile.write('subject to Stud_Is_Busy {i in 1..DAY, j in 1..SESSION, l in STUDENT}:\n\t')
+modfile.write('BUSZ[i,j,k] * sum {k in TEACHER} X[i,j,k,l] = 0;\n')
 
 # define C - denoting if a prof is a student chair
 modfile.write('subject to Is_Prof_Student_Pair {k in TEACHER, l in STUDENT}:\n\t')
