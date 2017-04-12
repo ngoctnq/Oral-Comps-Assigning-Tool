@@ -15,7 +15,7 @@ LOGICAL_FLAG = False
 # ID, SID, Mj, Mn
 # ts = teachers DataFrame
 # ID, SID, DP, 1Y, 2Y, UB
-st, ts = tools.import_data('data')
+st, ts = tools.import_data()
 modfile = open('ampl/mock.mod', 'w')
 datfile = open('ampl/mock.dat', 'w')
 
