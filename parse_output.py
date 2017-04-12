@@ -49,6 +49,8 @@ yDF = pd.DataFrame.from_records(y_data, columns=['day','sesh','stu'], index='stu
 yDF.sort_index()
 
 records = []
+stud_sheet = pd.read_excel(path, "Student Data")
+prof_sheet = pd.read_excel(path, "Faculty Data")
 
 # parse each student // keep appending records
 for i in range(s_count):
@@ -65,8 +67,9 @@ for i in range(s_count):
     for k in range(t_count):
         for l in range(1,5):
             if tempDF.get_value(k, l) == '1':
-                row[2 * l + 2] = ts.get_value(k, 'SID')
-                row[2 * l + 3] = ts.get_value(k, 'NAME')
+                sid = ts.get_value(k, 'SID')
+                row[2 * l + 2] = sid
+                row[2 * l + 3] = prof_sheet[prof_sheet["Person ID"] == sid]
                 break
     del p_data[0:t_count + 1]
     records.append(row)
