@@ -4,22 +4,16 @@
     MAT-226 Final Project
     '''
 # imports
-import init
+import tools
 
 LOGICAL_FLAG = False
-
-def newline(f):
-    '''
-    Take a opened file stream and write a newline.
-    '''
-    f.write('\n')
 
 # initializations
 # st = students DataFrame
 # ID, SID, Mj, Mn
 # ts = teachers DataFrame
 # ID, SID, DP, 1Y, 2Y
-st, ts = init.import_data('data')
+st, ts = tools.import_data('data')
 modfile = open('ampl/mock.mod', 'w')
 datfile = open('ampl/mock.dat', 'w')
 
@@ -28,7 +22,7 @@ s_count = len(st) # number of students
 t_count = len(ts) # number of teachers
 d_count = 3 # number of days
 i_count = 7 # number of sesh/day
-depts_c = len(init.depts) # number of depts
+depts_c = len(tools.get_depts()) # number of depts
 maxpday = 4 # max no of sesh/day
 
 # cache major/minor list of students

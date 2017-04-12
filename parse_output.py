@@ -2,7 +2,7 @@
 '''
 Take in the output from APML and then yield out human readable output.
 '''
-import init
+import tools
 import pandas as pd
 import sys
 
@@ -24,7 +24,7 @@ for i in range(3):
 for i in range(7):
     session_list[i] = valid.get_value(i,'Time Slots')
 
-st, ts = init.import_data()
+st, ts = tools.import_data()
 # number of student/professor
 s_count = len(st)
 t_count = len(ts)
