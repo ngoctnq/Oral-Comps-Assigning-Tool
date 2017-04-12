@@ -34,5 +34,10 @@ set DEPT26 :=;
 set DEPT27 := 48 57;
 set DEPT28 := 71;
 
+param UCAP :=
+          37  6 
+          61  4 
+          62  6 
+          74  6 ;
 param TRIPLE :=
              9  1 ;

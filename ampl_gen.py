@@ -90,6 +90,12 @@ tools.newline(modfile)
 # if the teacher had a cap on no of meets
 # TODO import actual prof's cap
 modfile.write('param UCAP {TEACHER} integer\n\tdefault 12;\n')
+datfile.write('param UCAP :=')
+for i in range(t_count):
+    ucap = str(ts.get_value(i, 'UB'))
+    if ucap != 'nan':
+        datfile.write('\n%12d  %-2d' % (i, int(float(ucap))))
+datfile.write(';\n')
 
 # if the teacher are free sometimes
 # TODO import actual prof's schedule
