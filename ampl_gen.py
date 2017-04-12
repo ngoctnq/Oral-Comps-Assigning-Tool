@@ -157,7 +157,7 @@ modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= UC
 modfile.write('subject to Prof_Is_Busy {i in 1..DAY, j in 1..SESSION, k in TEACHER}:\n\t')
 modfile.write('BUSY[i,j,k] * sum {l in STUDENT} X[i,j,k,l] = 0;\n')
 modfile.write('subject to Stud_Is_Busy {i in 1..DAY, j in 1..SESSION, l in STUDENT}:\n\t')
-modfile.write('BUSZ[i,j,k] * sum {k in TEACHER} X[i,j,k,l] = 0;\n')
+modfile.write('BUSZ[i,j,l] * sum {k in TEACHER} X[i,j,k,l] = 0;\n')
 
 # define C - denoting if a prof is a student chair
 modfile.write('subject to Is_Prof_Student_Pair {k in TEACHER, l in STUDENT}:\n\t')
@@ -210,7 +210,7 @@ for i in range(s_count):
 for l in range(s_count):
     mj_c = len(major[l])
     modfile.write('subject to No_New_Major_Board_Student_' + str(l) + ':\n\t')
-    modfile.write('sum {k in TEACHER, l in STUDENT, i in 1..' + str(mj_c) + '} P[k,l,i] * SNR[k,1] < ' + str(mj_c) + ';\n')
+    modfile.write('sum {k in TEACHER, l in STUDENT, i in 1..' + str(mj_c) + '} P[k,l,i] * SNR[k,1] <= ' + str(mj_c-1) + ';\n')
 
 # if 2nd yr major chair -> no new anythin
 # if use AMPL logic flags
