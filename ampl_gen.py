@@ -84,11 +84,15 @@ tools.newline(modfile)
 # TODO import actual profs' profile
 modfile.write('param SNR {TEACHER, 1..2} binary\n\tdefault 0;\n')
 tools.newline(modfile)
-# datfile.write('param SNR {i in TEACHER, j in 1..2} = 0;\n')
-# tools.newline(datfile)
+datfile.write('param SNR :=')
+for i in range(t_count):
+    for j in range(1,3):
+        snr_i = int(ts.get_value(i, str(j)+'Y'))
+        if snr == 1:
+            datfile.write('\n%12d  %-2d' % (i, int(float(ucap))))
+datfile.write(';\n')
 
 # if the teacher had a cap on no of meets
-# TODO import actual prof's cap
 modfile.write('param UCAP {TEACHER} integer\n\tdefault 12;\n')
 datfile.write('param UCAP :=')
 for i in range(t_count):

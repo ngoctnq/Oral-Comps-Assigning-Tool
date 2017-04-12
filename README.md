@@ -12,7 +12,7 @@ This solver is basically a proof-of-concept - that is why GeCode is used, since 
 The `LOGICAL_FLAG` denotes if the script is to create a problem with logical constraints - else, everything is arithmetic. Set `LOGICAL_FLAG = False` - this gives a full arithmetic constraint, and the previous solvers work magically.
 
 ## Howto:
-<i>Step 0:</i> Manually remove bad data: for example, Allen M. Betts and his unavailability.
+<i>Step 0:</i> Manually remove bad data: for example, Allen M. Betts and his unavailability, Jensen A. Kirch his EMU minor (corrected to EDU).
 
 <sub>Note: The department names are truncated to the last 3 characters to deal with MLL faculties - unforeseen side effects might occur if departments are named weirdly. Also, faculties in departments that no current senior is in will be ignored.</sub>
 
