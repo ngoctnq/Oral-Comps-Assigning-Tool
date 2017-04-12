@@ -4,6 +4,17 @@ Set of functions to import.
 '''
 import pandas as pd
 
+def get_date_and_time(path):
+    valid = pd.read_excel(path, "Validations")
+    date_list = ['','','']
+    session_list = ['','','','','','','']
+    # usernames and actual name are pulled from the processed csv
+    for i in range(3):
+        date_list[i] = valid.get_value(i, 'Comp Dates')
+    for i in range(7):
+        session_list[i] = valid.get_value(i, 'Time Slots')
+    return date_list, session_list
+
 def import_data():
     '''
     Import data from given files, like csv from mock_data folder.
@@ -20,7 +31,7 @@ def newline(f):
     '''
     f.write('\n')
 
-def get_depts(path='2016.xlsx'):
+def get_depts(path):
     '''
     Get the list of departments.
     '''

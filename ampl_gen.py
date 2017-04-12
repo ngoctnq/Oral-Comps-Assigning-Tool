@@ -6,6 +6,7 @@
 # imports
 import tools
 import sys
+import pandas as pd
 
 path = sys.argv[1] if len(sys.argv) > 1 else '2016.xlsx'
 LOGICAL_FLAG = False
@@ -72,7 +73,7 @@ datfile.write(';\n')
 for i in range(depts_c):
     datfile.write('set DEPT' + str(i) + " :=")
     for j in range(t_count):
-        if str(i) in ts.get_value(j,'DP'):
+        if str(i) in ts.get_value(j,'DP').split(','):
             datfile.write(' ' + str(j))
     datfile.write(';\n')
     modfile.write('set DEPT' + str(i) + ';\n')
@@ -104,6 +105,29 @@ datfile.write(';\n')
 # TODO import actual prof's schedule
 modfile.write('param BUSY {1..DAY, 1..SESSION, TEACHER} binary\n\tdefault 0;\n')
 modfile.write('param BUSZ {1..DAY, 1..SESSION, STUDENT} binary\n\tdefault 0;\n')
+date_list, session_list = tools.get_date_and_time(path)
+
+# faculty busy schedule
+stud = pd.read_excel(path, "Faculty Unavailability")
+datfile.write('param BUSY :=')
+for i in range(len(stud)):
+    pid = stud.get_value(i, 'Person Id')
+    dt = date_list.index(stud.get_value(i, 'Date'))
+    sesh = session_list.index(stud.get_value(i, 'Time Slot'))
+    pid = ts.loc[ts['SID'] == pid, 'ID'].values[0]
+    datfile.write('\n%8d %3d %-3d' % (pid, dt, sesh))
+datfile.write(';\n')
+
+# student busy schedule
+stud = pd.read_excel(path, "Student Unavailability")
+datfile.write('param BUSZ :=')
+for i in range(len(stud)):
+    pid = stud.get_value(i, 'Person Id')
+    dt = date_list.index(stud.get_value(i, 'Date'))
+    sesh = session_list.index(stud.get_value(i, 'Time Slot'))
+    pid = st.loc[st['SID'] == pid, 'ID'].values[0]
+    datfile.write('\n%8d %3d %-3d' % (pid, dt, sesh))
+datfile.write(';\n')
 
 # if the student has 3 majors
 modfile.write('param TRIPLE {STUDENT} binary\n\tdefault 0;\n')

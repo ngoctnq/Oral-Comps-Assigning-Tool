@@ -7,22 +7,7 @@ import pandas as pd
 import sys
 
 path = sys.argv[1] if len(sys.argv) > 1 else '2016.xlsx'
-valid = pd.read_excel(path, "Validations")
-# day i + 1
-date_list = ['1/11/2017', '1/12/2017', '1/13/2017']
-# list of time
-session_list = ['8:00 AM - 9:00 AM',
-                '9:15 AM - 10:15 AM',
-                '10:30 AM - 11:30 AM',
-                '11:45 AM - 12:45 PM',
-                '1:30 PM - 2:30 PM',
-                '2:45 PM - 3:45 PM',
-                '4:00 PM - 5:00 PM']
-# usernames and actual name are pulled from the processed csv
-for i in range(3):
-    date_list[i] = valid.get_value(i,'Comp Dates')
-for i in range(7):
-    session_list[i] = valid.get_value(i,'Time Slots')
+date_list, session_list = tools.get_date_and_time(path)
 
 st, ts = tools.import_data()
 # number of student/professor
