@@ -91,6 +91,10 @@ newline(modfile)
 # datfile.write('param SNR {i in TEACHER, j in 1..2} = 0;\n')
 # newline(datfile)
 
+# if the teacher had a cap on no of meets
+# TODO import actual prof's cap
+modfile.write('param UCAP {TEACHER} integer\n\tdefault 12;\n')
+
 # if the teacher are free sometimes
 # TODO import actual prof's schedule
 modfile.write('param BUSY {1..DAY, 1..SESSION, TEACHER} binary\n\tdefault 0;\n')
@@ -150,6 +154,8 @@ modfile.write('sum {l in STUDENT} (X[i,j,k,l] + X[i,j+1,k,l]) <= 1;\n')
 # at most $maxpday seshs per day per professor
 modfile.write('subject to Prof_Max_Per_Day {i in 1..DAY, k in TEACHER}:\n\t')
 modfile.write('sum {j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= '+ str(maxpday) + ';\n')
+modfile.write('subject to Prof_Max_All {k in TEACHER}:\n\t')
+modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= UCAP[k];\n')
 
 # profs cannot attend if busy *taps head meme*
 # NOTE cannot be optimized as sum of products equal zero
