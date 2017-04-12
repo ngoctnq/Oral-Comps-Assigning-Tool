@@ -46,6 +46,8 @@ for i in range(s_count):
                 row[3] = row[3] + ',' + str(depts.index(mnr))
     stud.append(row)
 
+# test
+    
 s_outDF = pd.DataFrame.from_records(stud, columns=['ID','SID','Mj','Mn'])
 t_outDF = pd.DataFrame.from_records(prof, columns=['ID','SID','DP','1Y','2Y','UB'])
 s_outDF.to_csv('data/student.csv', index=False)
