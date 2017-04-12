@@ -1,4 +1,4 @@
-,Student ID,Student Name,Day,Timeslot,Chair 1 ID,Chair 1 Name,Chair 2 ID,Chair 2 Name,Chair 3 ID,Chair 3 Name,Chair 4 ID,Chair 4 Name
-0,,,2,09:15,,,,,,,,
-1,,,2,11:45,,,,,,,,
-2,,,3,09:15,,,,,,,,
+Student ID,Student Name,Date,Timeslot,Chair 1 ID,Chair 1 Name,Chair 2 ID,Chair 2 Name,Chair 3 ID,Chair 3 Name,Chair 4 ID,Chair 4 Name
+123,Ngoc,2017-01-11,9:15 AM - 10:15 AM,321,A,234,D,444,V,,
+456,Omar,2017-01-11,11:45 AM - 12:45 PM,234,D,321,A,444,V,,
+789,Tu,2017-01-12,9:15 AM - 10:15 AM,321,A,444,A,234,D,444,V

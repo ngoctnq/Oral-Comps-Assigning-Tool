@@ -2,7 +2,6 @@
 CODE_DIR="/Users/ngoc/Documents/code/"
 LOC=""
 CHC=""
-
 if [[ $UID != 0 ]]; then
    echo "Right now you are in userland. You can rerun this with admin privilege to install package systemwide."
    printf "Proceed? (Y/N) "
@@ -34,6 +33,7 @@ python -m pip install -U pip $LOC
 
 # for DataFrame manipulation
 python -m pip install pandas $LOC
+python -m pip install xlrd $LOC
 
 # go to the actual directory
 cd $CODE_DIR"Oral-Comps-Assigning-Tool"
@@ -50,4 +50,4 @@ cp *_data $CODE_DIR"Oral-Comps-Assigning-Tool/data"
 cd $CODE_DIR"Oral-Comps-Assigning-Tool"
 
 # parse the output out
-python parse_output.py
+python parse_output.py "$1"
