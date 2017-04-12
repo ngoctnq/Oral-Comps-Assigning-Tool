@@ -76,16 +76,16 @@ for i in range(depts_c):
             datfile.write(' ' + str(j))
     datfile.write(';\n')
     modfile.write('set DEPT' + str(i) + ';\n')
-newline(datfile)
-newline(modfile)
+tools.newline(datfile)
+tools.newline(modfile)
 
 # declare variables and parameters
 # if the teachers are first or second year (else = not associate)
 # TODO import actual profs' profile
 modfile.write('param SNR {TEACHER, 1..2} binary\n\tdefault 0;\n')
-newline(modfile)
+tools.newline(modfile)
 # datfile.write('param SNR {i in TEACHER, j in 1..2} = 0;\n')
-# newline(datfile)
+# tools.newline(datfile)
 
 # if the teacher had a cap on no of meets
 # TODO import actual prof's cap
@@ -122,9 +122,9 @@ modfile.write('var C {TEACHER, STUDENT} binary;\n')
 modfile.write('var P {TEACHER, STUDENT, 1..4} binary;\n')
 
 modfile.write('var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;\n')
-newline(modfile)
+tools.newline(modfile)
 modfile.write('minimize CONST: 1;\n')
-newline(modfile)
+tools.newline(modfile)
 
 # legend: v%d%i%p%s
     # %d: day of oral
@@ -222,7 +222,7 @@ if LOGICAL_FLAG:
         modfile.write('(numberof 1 in ({k in TEACHER, i in 1..' + str(mj_c) + '} P[k,' + str(l) + ',i]) > 0) or ')
         # or there must be no first year
         modfile.write('(numberof 1 in ({k in TEACHER, i in 1..4} (P[k,' + str(l) + ',i] * SNR[k,1])) = 0);')
-        newline(modfile)
+        tools.newline(modfile)
 else:
     for l in range(s_count):
         mj_c = len(major[l])
