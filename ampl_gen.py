@@ -16,9 +16,9 @@ def newline(f):
 
 # initializations
 # st = students DataFrame
-# ID, SID, NAME, Mj, Mn
+# ID, SID, Mj, Mn
 # ts = teachers DataFrame
-# ID, SID, NAME, DP, 1Y, 2Y
+# ID, SID, DP, 1Y, 2Y
 st, ts = init.import_data('data')
 modfile = open('ampl/mock.mod', 'w')
 datfile = open('ampl/mock.dat', 'w')
@@ -26,10 +26,10 @@ datfile = open('ampl/mock.dat', 'w')
 # cache
 s_count = len(st) # number of students
 t_count = len(ts) # number of teachers
-d_count = 2 # number of days
-i_count = 3 # number of sesh/day
-depts_c = 4 # number of depts
-maxpday = 2 # max no of sesh/day
+d_count = 3 # number of days
+i_count = 7 # number of sesh/day
+depts_c = len(init.depts) # number of depts
+maxpday = 4 # max no of sesh/day
 
 # cache major/minor list of students
 major = []
@@ -241,5 +241,3 @@ else:
 
 modfile.close()
 datfile.close()
-
-# list of variables

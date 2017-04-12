@@ -14,11 +14,13 @@ def import_data(s = 'data'):
 
     return s_csv, t_csv
 
+depts = []
+
 # do imports here
 # initialize output file for parse_output.py
 # write it directly to student/teacher.csv
     # st = students DataFrame
-    # ID, Mj, Mn, SID, NAME
+    # ID, SID, Mj, Mn
     # ts = teachers DataFrame
-    # ID, DP, 1Y, 2Y, SID, NAME
+    # ID, SID, DP, 1Y, 2Y
 # TODO WRITE THINGS TO CSV
