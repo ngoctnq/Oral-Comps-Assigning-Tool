@@ -81,15 +81,14 @@ tools.newline(modfile)
 
 # declare variables and parameters
 # if the teachers are first or second year (else = not associate)
-# TODO import actual profs' profile
 modfile.write('param SNR {TEACHER, 1..2} binary\n\tdefault 0;\n')
 tools.newline(modfile)
 datfile.write('param SNR :=')
 for i in range(t_count):
     for j in range(1,3):
         snr_i = int(ts.get_value(i, str(j)+'Y'))
-        if snr == 1:
-            datfile.write('\n%12d  %-2d' % (i, int(float(ucap))))
+        if snr_i == 1:
+            datfile.write('\n%7d %3d %-3d' % (i, j, snr_i))
 datfile.write(';\n')
 
 # if the teacher had a cap on no of meets
