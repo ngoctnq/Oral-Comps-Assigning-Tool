@@ -14,7 +14,7 @@ The `LOGICAL_FLAG` denotes if the script is to create a problem with logical con
 ## Howto:
 <i>Step 0:</i> Manually remove bad data: for example, Allen M. Betts and his unavailability.
 
-<sub>Note: The department names are truncated to the last 3 characters to deal with MLL faculties - unforeseen side effect might occur if departments are named weirdly.</sub>
+<sub>Note: The department names are truncated to the last 3 characters to deal with MLL faculties - unforeseen side effects might occur if departments are named weirdly. Also, faculties in departments that no current senior is in will be ignored.</sub>
 
 <i>Step 0.5:</i> Install AMPL, with GeCode solver. The directory of AMPL can be changed in `main.sh`, and the replacement for GeCode can be changed in `ampl/mock.prod`.
 
