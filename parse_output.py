@@ -41,7 +41,7 @@ for i in range(s_count):
     row = ['','','','','','','','','','','','']
     # get time
     row[2] = date_list[int(yDF.get_value(str(i), 'day'))-1]
-    row[3] = session_list[int(yDF.get_value(str(i), 'sesh'))]
+    row[3] = session_list[int(yDF.get_value(str(i), 'sesh'))-1]
     # get assignment
     del p_data[0:2]
     temp_data = p_data[0:t_count]

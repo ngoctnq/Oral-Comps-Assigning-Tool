@@ -108,14 +108,14 @@ modfile.write('param BUSZ {1..DAY, 1..SESSION, STUDENT} binary\n\tdefault 0;\n')
 date_list, session_list = tools.get_date_and_time(path)
 
 # faculty busy schedule
-stud = pd.read_excel(path, "Faculty Unavailability")
+prof = pd.read_excel(path, "Faculty Unavailability")
 datfile.write('param BUSY :=')
-for i in range(len(stud)):
-    pid = stud.get_value(i, 'Person Id')
-    dt = date_list.index(stud.get_value(i, 'Date'))
-    sesh = session_list.index(stud.get_value(i, 'Time Slot'))
+for i in range(len(prof)):
+    pid = prof.get_value(i, 'Person Id')
+    dt = date_list.index(prof.get_value(i, 'Date')) + 1
+    sesh = session_list.index(prof.get_value(i, 'Time Slot')) + 1
     pid = ts.loc[ts['SID'] == pid, 'ID'].values[0]
-    datfile.write('\n%8d %3d %-3d' % (pid, dt, sesh))
+    datfile.write('\n%4d %3d %3d %-3d' % (dt, sesh, pid, 1))
 datfile.write(';\n')
 
 # student busy schedule
@@ -123,10 +123,10 @@ stud = pd.read_excel(path, "Student Unavailability")
 datfile.write('param BUSZ :=')
 for i in range(len(stud)):
     pid = stud.get_value(i, 'Person Id')
-    dt = date_list.index(stud.get_value(i, 'Date'))
-    sesh = session_list.index(stud.get_value(i, 'Time Slot'))
+    dt = date_list.index(stud.get_value(i, 'Date')) + 1
+    sesh = session_list.index(stud.get_value(i, 'Time Slot')) + 1
     pid = st.loc[st['SID'] == pid, 'ID'].values[0]
-    datfile.write('\n%8d %3d %-3d' % (pid, dt, sesh))
+    datfile.write('\n%4d %3d %3d %-3d' % (dt, sesh, pid, 1))
 datfile.write(';\n')
 
 # if the student has 3 majors
@@ -265,7 +265,7 @@ else:
         # or there is a 3rd year mj
         for i in range(mj_c):
             modfile.write(' * (product {k in TEACHER} (P[k,' + str(l) + ',' + str(i + 1) + '] - SNR[k,1] - SNR[k,2] - 1))')
-        modfile.write(' = 0;')
+        modfile.write(' = 0;\n')
 
 modfile.close()
 datfile.close()
