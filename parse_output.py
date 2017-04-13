@@ -21,17 +21,41 @@ y_file.close()
 p_file.close()
 
 del y_data[0]
-del y_data[-2:]
-y_cursor = 0
-while y_cursor < len(y_data):
-    if y_data[y_cursor][-2] == '0':
-        del y_data[y_cursor]
-    else:
-        y_data[y_cursor] = y_data[y_cursor][:-5].split()
-        y_cursor += 1
-yDF = pd.DataFrame.from_records(y_data, columns=['day','sesh','stu'], index='stu')
-yDF.sort_index()
+del p_data[0]
 
+y_list = []
+p_list = []
+
+def process(s, l):
+    '''
+    Process AMPL output into list.
+    '''
+    catcher = ''
+    opened = False
+    while len(s)>0 and s[0] != ';':
+        if s[0] == ' ':
+            pass
+        elif s[0] == '(':
+            opened = True
+            catcher = ''
+        elif s[0] == ')':
+            opened = False
+            l.append(map(int, catcher.split(',')))
+        else:
+            catcher += s[0]
+        s = s[1:]
+
+while len(y_data)>0:
+    process(y_data[0], y_list)
+    del y_data[0]
+
+while len(p_data)>0:
+    process(p_data[0], p_list)
+    del p_data[0]
+    
+#print y_list
+#print p_list
+    
 records = []
 stud_sheet = pd.read_excel(path, "Student Data")
 prof_sheet = pd.read_excel(path, "Faculty Data")
@@ -40,25 +64,21 @@ prof_sheet = pd.read_excel(path, "Faculty Data")
 for i in range(s_count):
     row = ['','','','','','','','','','','','']
     # get time
-    row[2] = date_list[int(yDF.get_value(str(i), 'day'))-1]
-    row[3] = session_list[int(yDF.get_value(str(i), 'sesh'))-1]
+    row[2] = date_list[y_list[i][0] - 1]
+    row[3] = session_list[y_list[i][1] -1]
     # get assignment
-    del p_data[0:2]
-    temp_data = p_data[0:t_count]
-    tempDF = pd.Series(temp_data).str.split().apply(pd.Series)
+    tempDF = pd.DataFrame.from_records(p_list, columns=['ts','st','c'])
     sid = st.get_value(i, 'SID')
     row[0] = '%07d' % sid
     name = stud_sheet.loc[stud_sheet['Person Id'] == sid, 'Student Name'].values[0]
     row[1] = name
-    for k in range(t_count):
-        for l in range(1,5):
-            if tempDF.get_value(k, l) == '1':
-                sid = ts.get_value(k, 'SID')
-                row[2 * l + 2] = '%07d' % sid
-                name = prof_sheet.loc[prof_sheet['Person Id'] == sid, 'Faculty Name'].values[0]
-                row[2 * l + 3] = name
-                break
-    del p_data[0:t_count + 1]
+    for l in range(1,5):
+        cid = tempDF[(tempDF['st'] == i) & (tempDF['c'] == l)]['ts']
+        if len(cid) != 0:
+            sid = ts.get_value(cid.values[0], 'SID')
+            row[2 * l + 2] = '%07d' % sid
+            name = prof_sheet.loc[prof_sheet['Person Id'] == sid, 'Faculty Name'].values[0]
+            row[2 * l + 3] = name
     records.append(row)
 
 # packing em all in
