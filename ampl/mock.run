@@ -1,27 +1,45 @@
 model mock.mod;
 data mock.dat;
 
-option solver cplex;
+option solver knitro;
 solve;
-display P >output_cplex;
-display Y >output_cplex;
-
-option solver gurobi;
-solve;
-display P >output_gurobi;
-display Y >output_gurobi;
-
-option solver xpress;
-solve;
-display P >output_xpress;
-display Y >output_xpress;
+display {k in TEACHER, l in STUDENT, i in 1..4: P[k,l,i]=1} >p_knitro;
+display {i in 1..DAY, j in 1..SESSION, l in STUDENT: Y[i,j,l]=1} >y_knitro;
+display _ampl_elapsed_time + _total_solve_elapsed_time >t_knitro;
 
 option solver locsol;
 solve;
-display P >output_locsol;
-display Y >output_locsol;
+display {k in TEACHER, l in STUDENT, i in 1..4: P[k,l,i]=1} >p_locsol;
+display {i in 1..DAY, j in 1..SESSION, l in STUDENT: Y[i,j,l]=1} >y_locsol;
+display _ampl_elapsed_time + _total_solve_elapsed_time >t_locsol;
+
+
+option solver ipopt;
+solve;
+display {k in TEACHER, l in STUDENT, i in 1..4: P[k,l,i]=1} >p_ipopt;
+display {i in 1..DAY, j in 1..SESSION, l in STUDENT: Y[i,j,l]=1} >y_ipopt;
+display _ampl_elapsed_time + _total_solve_elapsed_time >t_ipopt;
+
+option solver gecode;
+solve;
+display {k in TEACHER, l in STUDENT, i in 1..4: P[k,l,i]=1} >p_gecode;
+display {i in 1..DAY, j in 1..SESSION, l in STUDENT: Y[i,j,l]=1} >y_gecode;
+display _ampl_elapsed_time + _total_solve_elapsed_time >t_gecode;
 
 option solver baron;
 solve;
-display P >output_baron;
-display Y >output_baron;
+display {k in TEACHER, l in STUDENT, i in 1..4: P[k,l,i]=1} >p_baron;
+display {i in 1..DAY, j in 1..SESSION, l in STUDENT: Y[i,j,l]=1} >y_baron;
+display _ampl_elapsed_time + _total_solve_elapsed_time >t_baron;
+
+option solver bonmin;
+solve;
+display {k in TEACHER, l in STUDENT, i in 1..4: P[k,l,i]=1} >p_bonmin;
+display {i in 1..DAY, j in 1..SESSION, l in STUDENT: Y[i,j,l]=1} >y_bonmin;
+display _ampl_elapsed_time + _total_solve_elapsed_time >t_bonmin;
+
+option solver jacop;
+solve;
+display {k in TEACHER, l in STUDENT, i in 1..4: P[k,l,i]=1} >p_jacop;
+display {i in 1..DAY, j in 1..SESSION, l in STUDENT: Y[i,j,l]=1} >y_jacop;
+display _ampl_elapsed_time + _total_solve_elapsed_time >t_jacop;

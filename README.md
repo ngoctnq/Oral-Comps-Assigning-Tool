@@ -32,3 +32,9 @@ cd Oral-Comps-Assigning-Tool
 
 <i> Step 3:</i>
 Voila - It's easy as 1-2-3! Do what you want with the new generated `schedule.csv`.
+
+## Notes
+- no verification of constraint satisfaction for `locsol`
+- `ipopt` looks nice but treats everything as continuous
+- `knitro` took 4 days and no solutions
+- `gecode`, `baron`, `bonmin` will be tried later
