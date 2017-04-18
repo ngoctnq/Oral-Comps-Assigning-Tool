@@ -9,7 +9,6 @@ import sys
 import pandas as pd
 
 path = sys.argv[1] if len(sys.argv) > 1 else '2016.xlsx'
-LOGICAL_FLAG = False
 
 # initializations
 # st = students DataFrame
@@ -27,6 +26,7 @@ d_count = 3 # number of days
 i_count = 7 # number of sesh/day
 depts_c = len(tools.get_depts(path)) # number of depts
 maxpday = 4 # max no of sesh/day
+maxpall = 12 # max no of sesh/all
 
 # cache major/minor list of students
 major = []
@@ -93,7 +93,7 @@ for i in range(t_count):
 datfile.write(';\n')
 
 # if the teacher had a cap on no of meets
-modfile.write('param UCAP {TEACHER} integer\n\tdefault 12;\n')
+modfile.write('param UCAP {TEACHER} integer\n\tdefault ' + str(maxpall) + ';\n')
 datfile.write('param UCAP :=')
 for i in range(t_count):
     ucap = str(ts.get_value(i, 'UB'))
@@ -154,9 +154,12 @@ modfile.write('var C {TEACHER, STUDENT} binary;\n')
 # the order of student's profs
 modfile.write('var P {TEACHER, STUDENT, 1..4} binary;\n')
 
+# TO MINIMIZE: THE MAXIMUM NUMBER OF SESSIONS PER ALL
+modfile.write('var MAXPALL integer;\n')
+
 modfile.write('var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;\n')
 tools.newline(modfile)
-modfile.write('minimize CONST: 1;\n')
+modfile.write('minimize CONST: MAXPALL;\n')
 tools.newline(modfile)
 
 # legend: v%d%i%p%s
@@ -184,6 +187,8 @@ modfile.write('subject to Prof_Max_Per_Day {i in 1..DAY, k in TEACHER}:\n\t')
 modfile.write('sum {j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= '+ str(maxpday) + ';\n')
 modfile.write('subject to Prof_Max_All {k in TEACHER}:\n\t')
 modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= UCAP[k];\n')
+modfile.write('subject to Prof_Max_All_REAL {k in TEACHER}:\n\t')
+modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= MAXPALL;\n')
 
 # profs cannot attend if busy *taps head meme*
 # NOTE cannot be optimized as sum of products equal zero
@@ -243,29 +248,22 @@ for i in range(s_count):
 for l in range(s_count):
     mj_c = len(major[l])
     modfile.write('subject to No_New_Major_Board_Student_' + str(l) + ':\n\t')
-    modfile.write('sum {k in TEACHER, l in STUDENT, i in 1..' + str(mj_c) + '} P[k,l,i] * SNR[k,1] <= ' + str(mj_c-1) + ';\n')
+    modfile.write('sum {k in TEACHER, l in STUDENT, i in 1..' + str(mj_c) + '} P[k,l,i] * SNR[k,1] = 0;\n')
 
 # if 2nd yr major chair -> no new anythin
-# if use AMPL logic flags
-if LOGICAL_FLAG:
-    for l in range(s_count):
-        mj_c = len(major[l])
-        modfile.write('subject to Maj_Prof_2ndYr_Then_No_New_' + str(l) + ':\n\t')
-        # either there is a 3rd yr prof in the majors
-        modfile.write('(numberof 1 in ({k in TEACHER, i in 1..' + str(mj_c) + '} P[k,' + str(l) + ',i]) > 0) or ')
-        # or there must be no first year
-        modfile.write('(numberof 1 in ({k in TEACHER, i in 1..4} (P[k,' + str(l) + ',i] * SNR[k,1])) = 0);')
-        tools.newline(modfile)
-else:
-    for l in range(s_count):
-        mj_c = len(major[l])
-        modfile.write('subject to Maj_Prof_2ndYr_Then_No_New_' + str(l) + ':\n\t')
-        # either there is no first year (then the sum = 0)
-        modfile.write('(sum {k in TEACHER, i in 1..4} (P[k,' + str(l) + ',i] * SNR[k,1]))')
-        # or there is a 3rd year mj
-        for i in range(mj_c):
-            modfile.write(' * (product {k in TEACHER} (P[k,' + str(l) + ',' + str(i + 1) + '] - SNR[k,1] - SNR[k,2] - 1))')
-        modfile.write(' = 0;\n')
+for l in range(s_count):
+    mj_c = len(major[l])
+    modfile.write('subject to Maj_Prof_2ndYr_Then_No_New_' + str(l) + ':\n\t')
+    # either there is no first year (then the sum = 0)
+    modfile.write('(sum {k in TEACHER, i in ' + str(mj_c+1) + '..4} (P[k,' + str(l) + ',i] * SNR[k,1])) + ')
+    # or there is a 3rd year mj
+    modfile.write('3 * (sum {k in TEACHER, i in 1..' + str(mj_c) + '} (P[k,' + str(l) + ',i] * SNR[k,2]))')
+    modfile.write(' <= ')
+    if mj_c == 1:
+        modfile.write('2')
+    else:
+        modfile.write(str(3 * mj_c))
+    modfile.write(';\n')
 
 modfile.close()
 datfile.close()

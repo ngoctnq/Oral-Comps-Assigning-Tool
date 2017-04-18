@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 '''
-Take in the output from APML and then yield out human readable output.
+First, verify the integrity of the solution. TODO
+Then, take in the output from APML and then yield out human readable output.
 '''
 import tools
 import pandas as pd
@@ -53,8 +54,8 @@ while len(p_data)>0:
     process(p_data[0], p_list)
     del p_data[0]
     
-#print y_list
-#print p_list
+# print y_list
+# print p_list
     
 records = []
 stud_sheet = pd.read_excel(path, "Student Data")

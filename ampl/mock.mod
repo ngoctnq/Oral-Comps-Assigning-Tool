@@ -45,9 +45,10 @@ param TRIPLE {STUDENT} binary
 var Y {1..DAY, 1..SESSION, STUDENT} binary;
 var C {TEACHER, STUDENT} binary;
 var P {TEACHER, STUDENT, 1..4} binary;
+var MAXPALL integer;
 var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;
 
-minimize CONST: 1;
+minimize CONST: MAXPALL;
 
 subject to Student_Timeslot_Binary {l in STUDENT}:
 	sum {i in 1..DAY, j in 1..SESSION} Y[i,j,l] = 1;
@@ -61,6 +62,8 @@ subject to Prof_Max_Per_Day {i in 1..DAY, k in TEACHER}:
 	sum {j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= 4;
 subject to Prof_Max_All {k in TEACHER}:
 	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= UCAP[k];
+subject to Prof_Max_All_REAL {k in TEACHER}:
+	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= MAXPALL;
 subject to Prof_Is_Busy {i in 1..DAY, j in 1..SESSION, k in TEACHER}:
 	BUSY[i,j,k] * sum {l in STUDENT} X[i,j,k,l] = 0;
 subject to Stud_Is_Busy {i in 1..DAY, j in 1..SESSION, l in STUDENT}:
@@ -1216,762 +1219,762 @@ subject to Prof_Student_189_Minor:
 subject to Prof_Student_189_AtLarge:
 	sum {k in (TEACHER diff DEPT18 diff DEPT1)} P[k,189,3 + TRIPLE[189]] = 1;
 subject to No_New_Major_Board_Student_0:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_1:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_2:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_3:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_4:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_5:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_6:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_7:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_8:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_9:
-	sum {k in TEACHER, l in STUDENT, i in 1..3} P[k,l,i] * SNR[k,1] <= 2;
+	sum {k in TEACHER, l in STUDENT, i in 1..3} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_10:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_11:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_12:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_13:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_14:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_15:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_16:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_17:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_18:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_19:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_20:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_21:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_22:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_23:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_24:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_25:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_26:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_27:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_28:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_29:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_30:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_31:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_32:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_33:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_34:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_35:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_36:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_37:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_38:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_39:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_40:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_41:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_42:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_43:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_44:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_45:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_46:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_47:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_48:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_49:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_50:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_51:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_52:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_53:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_54:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_55:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_56:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_57:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_58:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_59:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_60:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_61:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_62:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_63:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_64:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_65:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_66:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_67:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_68:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_69:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_70:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_71:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_72:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_73:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_74:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_75:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_76:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_77:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_78:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_79:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_80:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_81:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_82:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_83:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_84:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_85:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_86:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_87:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_88:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_89:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_90:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_91:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_92:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_93:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_94:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_95:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_96:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_97:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_98:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_99:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_100:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_101:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_102:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_103:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_104:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_105:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_106:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_107:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_108:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_109:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_110:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_111:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_112:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_113:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_114:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_115:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_116:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_117:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_118:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_119:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_120:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_121:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_122:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_123:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_124:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_125:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_126:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_127:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_128:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_129:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_130:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_131:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_132:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_133:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_134:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_135:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_136:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_137:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_138:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_139:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_140:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_141:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_142:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_143:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_144:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_145:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_146:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_147:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_148:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_149:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_150:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_151:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_152:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_153:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_154:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_155:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_156:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_157:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_158:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_159:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_160:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_161:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_162:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_163:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_164:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_165:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_166:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_167:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_168:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_169:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_170:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_171:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_172:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_173:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_174:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_175:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_176:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_177:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_178:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_179:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_180:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_181:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_182:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_183:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_184:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_185:
-	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] <= 1;
+	sum {k in TEACHER, l in STUDENT, i in 1..2} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_186:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_187:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_188:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to No_New_Major_Board_Student_189:
-	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] <= 0;
+	sum {k in TEACHER, l in STUDENT, i in 1..1} P[k,l,i] * SNR[k,1] = 0;
 subject to Maj_Prof_2ndYr_Then_No_New_0:
-	(sum {k in TEACHER, i in 1..4} (P[k,0,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,0,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,0,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,0,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_1:
-	(sum {k in TEACHER, i in 1..4} (P[k,1,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,1,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,1,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,1,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_2:
-	(sum {k in TEACHER, i in 1..4} (P[k,2,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,2,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,2,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,2,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_3:
-	(sum {k in TEACHER, i in 1..4} (P[k,3,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,3,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,3,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,3,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_4:
-	(sum {k in TEACHER, i in 1..4} (P[k,4,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,4,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,4,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,4,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_5:
-	(sum {k in TEACHER, i in 1..4} (P[k,5,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,5,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,5,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,5,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_6:
-	(sum {k in TEACHER, i in 1..4} (P[k,6,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,6,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,6,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,6,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_7:
-	(sum {k in TEACHER, i in 1..4} (P[k,7,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,7,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,7,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,7,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_8:
-	(sum {k in TEACHER, i in 1..4} (P[k,8,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,8,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,8,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,8,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_9:
-	(sum {k in TEACHER, i in 1..4} (P[k,9,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,9,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,9,2] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,9,3] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 4..4} (P[k,9,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..3} (P[k,9,i] * SNR[k,2])) <= 9;
 subject to Maj_Prof_2ndYr_Then_No_New_10:
-	(sum {k in TEACHER, i in 1..4} (P[k,10,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,10,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,10,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,10,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_11:
-	(sum {k in TEACHER, i in 1..4} (P[k,11,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,11,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,11,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,11,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_12:
-	(sum {k in TEACHER, i in 1..4} (P[k,12,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,12,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,12,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,12,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_13:
-	(sum {k in TEACHER, i in 1..4} (P[k,13,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,13,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,13,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,13,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_14:
-	(sum {k in TEACHER, i in 1..4} (P[k,14,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,14,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,14,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,14,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_15:
-	(sum {k in TEACHER, i in 1..4} (P[k,15,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,15,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,15,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,15,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,15,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_16:
-	(sum {k in TEACHER, i in 1..4} (P[k,16,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,16,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,16,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,16,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_17:
-	(sum {k in TEACHER, i in 1..4} (P[k,17,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,17,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,17,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,17,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_18:
-	(sum {k in TEACHER, i in 1..4} (P[k,18,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,18,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,18,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,18,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_19:
-	(sum {k in TEACHER, i in 1..4} (P[k,19,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,19,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,19,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,19,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_20:
-	(sum {k in TEACHER, i in 1..4} (P[k,20,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,20,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,20,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,20,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_21:
-	(sum {k in TEACHER, i in 1..4} (P[k,21,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,21,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,21,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,21,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_22:
-	(sum {k in TEACHER, i in 1..4} (P[k,22,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,22,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,22,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,22,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,22,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_23:
-	(sum {k in TEACHER, i in 1..4} (P[k,23,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,23,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,23,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,23,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_24:
-	(sum {k in TEACHER, i in 1..4} (P[k,24,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,24,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,24,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,24,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_25:
-	(sum {k in TEACHER, i in 1..4} (P[k,25,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,25,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,25,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,25,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_26:
-	(sum {k in TEACHER, i in 1..4} (P[k,26,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,26,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,26,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,26,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_27:
-	(sum {k in TEACHER, i in 1..4} (P[k,27,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,27,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,27,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,27,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_28:
-	(sum {k in TEACHER, i in 1..4} (P[k,28,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,28,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,28,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,28,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_29:
-	(sum {k in TEACHER, i in 1..4} (P[k,29,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,29,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,29,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,29,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_30:
-	(sum {k in TEACHER, i in 1..4} (P[k,30,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,30,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,30,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,30,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_31:
-	(sum {k in TEACHER, i in 1..4} (P[k,31,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,31,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,31,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,31,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_32:
-	(sum {k in TEACHER, i in 1..4} (P[k,32,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,32,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,32,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,32,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_33:
-	(sum {k in TEACHER, i in 1..4} (P[k,33,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,33,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,33,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,33,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_34:
-	(sum {k in TEACHER, i in 1..4} (P[k,34,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,34,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,34,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,34,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_35:
-	(sum {k in TEACHER, i in 1..4} (P[k,35,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,35,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,35,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,35,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_36:
-	(sum {k in TEACHER, i in 1..4} (P[k,36,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,36,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,36,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,36,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_37:
-	(sum {k in TEACHER, i in 1..4} (P[k,37,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,37,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,37,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,37,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_38:
-	(sum {k in TEACHER, i in 1..4} (P[k,38,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,38,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,38,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,38,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_39:
-	(sum {k in TEACHER, i in 1..4} (P[k,39,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,39,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,39,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,39,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_40:
-	(sum {k in TEACHER, i in 1..4} (P[k,40,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,40,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,40,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,40,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_41:
-	(sum {k in TEACHER, i in 1..4} (P[k,41,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,41,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,41,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,41,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_42:
-	(sum {k in TEACHER, i in 1..4} (P[k,42,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,42,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,42,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,42,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_43:
-	(sum {k in TEACHER, i in 1..4} (P[k,43,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,43,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,43,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,43,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_44:
-	(sum {k in TEACHER, i in 1..4} (P[k,44,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,44,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,44,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,44,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,44,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_45:
-	(sum {k in TEACHER, i in 1..4} (P[k,45,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,45,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,45,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,45,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_46:
-	(sum {k in TEACHER, i in 1..4} (P[k,46,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,46,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,46,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,46,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_47:
-	(sum {k in TEACHER, i in 1..4} (P[k,47,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,47,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,47,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,47,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_48:
-	(sum {k in TEACHER, i in 1..4} (P[k,48,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,48,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,48,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,48,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_49:
-	(sum {k in TEACHER, i in 1..4} (P[k,49,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,49,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,49,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,49,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_50:
-	(sum {k in TEACHER, i in 1..4} (P[k,50,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,50,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,50,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,50,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_51:
-	(sum {k in TEACHER, i in 1..4} (P[k,51,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,51,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,51,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,51,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_52:
-	(sum {k in TEACHER, i in 1..4} (P[k,52,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,52,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,52,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,52,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_53:
-	(sum {k in TEACHER, i in 1..4} (P[k,53,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,53,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,53,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,53,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_54:
-	(sum {k in TEACHER, i in 1..4} (P[k,54,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,54,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,54,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,54,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_55:
-	(sum {k in TEACHER, i in 1..4} (P[k,55,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,55,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,55,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,55,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,55,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_56:
-	(sum {k in TEACHER, i in 1..4} (P[k,56,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,56,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,56,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,56,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,56,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_57:
-	(sum {k in TEACHER, i in 1..4} (P[k,57,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,57,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,57,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,57,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_58:
-	(sum {k in TEACHER, i in 1..4} (P[k,58,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,58,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,58,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,58,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_59:
-	(sum {k in TEACHER, i in 1..4} (P[k,59,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,59,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,59,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,59,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,59,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_60:
-	(sum {k in TEACHER, i in 1..4} (P[k,60,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,60,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,60,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,60,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_61:
-	(sum {k in TEACHER, i in 1..4} (P[k,61,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,61,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,61,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,61,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_62:
-	(sum {k in TEACHER, i in 1..4} (P[k,62,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,62,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,62,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,62,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_63:
-	(sum {k in TEACHER, i in 1..4} (P[k,63,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,63,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,63,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,63,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_64:
-	(sum {k in TEACHER, i in 1..4} (P[k,64,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,64,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,64,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,64,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_65:
-	(sum {k in TEACHER, i in 1..4} (P[k,65,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,65,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,65,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,65,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_66:
-	(sum {k in TEACHER, i in 1..4} (P[k,66,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,66,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,66,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,66,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_67:
-	(sum {k in TEACHER, i in 1..4} (P[k,67,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,67,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,67,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,67,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_68:
-	(sum {k in TEACHER, i in 1..4} (P[k,68,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,68,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,68,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,68,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_69:
-	(sum {k in TEACHER, i in 1..4} (P[k,69,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,69,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,69,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,69,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_70:
-	(sum {k in TEACHER, i in 1..4} (P[k,70,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,70,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,70,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,70,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_71:
-	(sum {k in TEACHER, i in 1..4} (P[k,71,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,71,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,71,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,71,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,71,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_72:
-	(sum {k in TEACHER, i in 1..4} (P[k,72,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,72,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,72,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,72,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_73:
-	(sum {k in TEACHER, i in 1..4} (P[k,73,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,73,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,73,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,73,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_74:
-	(sum {k in TEACHER, i in 1..4} (P[k,74,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,74,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,74,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,74,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_75:
-	(sum {k in TEACHER, i in 1..4} (P[k,75,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,75,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,75,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,75,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_76:
-	(sum {k in TEACHER, i in 1..4} (P[k,76,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,76,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,76,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,76,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_77:
-	(sum {k in TEACHER, i in 1..4} (P[k,77,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,77,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,77,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,77,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_78:
-	(sum {k in TEACHER, i in 1..4} (P[k,78,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,78,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,78,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,78,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_79:
-	(sum {k in TEACHER, i in 1..4} (P[k,79,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,79,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,79,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,79,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_80:
-	(sum {k in TEACHER, i in 1..4} (P[k,80,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,80,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,80,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,80,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,80,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_81:
-	(sum {k in TEACHER, i in 1..4} (P[k,81,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,81,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,81,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,81,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_82:
-	(sum {k in TEACHER, i in 1..4} (P[k,82,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,82,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,82,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,82,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_83:
-	(sum {k in TEACHER, i in 1..4} (P[k,83,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,83,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,83,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,83,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_84:
-	(sum {k in TEACHER, i in 1..4} (P[k,84,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,84,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,84,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,84,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_85:
-	(sum {k in TEACHER, i in 1..4} (P[k,85,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,85,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,85,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,85,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_86:
-	(sum {k in TEACHER, i in 1..4} (P[k,86,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,86,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,86,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,86,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_87:
-	(sum {k in TEACHER, i in 1..4} (P[k,87,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,87,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,87,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,87,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_88:
-	(sum {k in TEACHER, i in 1..4} (P[k,88,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,88,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,88,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,88,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,88,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_89:
-	(sum {k in TEACHER, i in 1..4} (P[k,89,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,89,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,89,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,89,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_90:
-	(sum {k in TEACHER, i in 1..4} (P[k,90,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,90,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,90,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,90,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_91:
-	(sum {k in TEACHER, i in 1..4} (P[k,91,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,91,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,91,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,91,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_92:
-	(sum {k in TEACHER, i in 1..4} (P[k,92,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,92,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,92,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,92,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_93:
-	(sum {k in TEACHER, i in 1..4} (P[k,93,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,93,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,93,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,93,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_94:
-	(sum {k in TEACHER, i in 1..4} (P[k,94,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,94,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,94,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,94,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_95:
-	(sum {k in TEACHER, i in 1..4} (P[k,95,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,95,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,95,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,95,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_96:
-	(sum {k in TEACHER, i in 1..4} (P[k,96,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,96,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,96,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,96,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,96,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_97:
-	(sum {k in TEACHER, i in 1..4} (P[k,97,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,97,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,97,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,97,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_98:
-	(sum {k in TEACHER, i in 1..4} (P[k,98,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,98,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,98,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,98,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_99:
-	(sum {k in TEACHER, i in 1..4} (P[k,99,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,99,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,99,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,99,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_100:
-	(sum {k in TEACHER, i in 1..4} (P[k,100,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,100,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,100,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,100,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_101:
-	(sum {k in TEACHER, i in 1..4} (P[k,101,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,101,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,101,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,101,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,101,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_102:
-	(sum {k in TEACHER, i in 1..4} (P[k,102,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,102,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,102,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,102,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_103:
-	(sum {k in TEACHER, i in 1..4} (P[k,103,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,103,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,103,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,103,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_104:
-	(sum {k in TEACHER, i in 1..4} (P[k,104,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,104,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,104,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,104,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,104,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_105:
-	(sum {k in TEACHER, i in 1..4} (P[k,105,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,105,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,105,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,105,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_106:
-	(sum {k in TEACHER, i in 1..4} (P[k,106,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,106,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,106,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,106,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_107:
-	(sum {k in TEACHER, i in 1..4} (P[k,107,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,107,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,107,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,107,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_108:
-	(sum {k in TEACHER, i in 1..4} (P[k,108,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,108,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,108,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,108,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,108,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_109:
-	(sum {k in TEACHER, i in 1..4} (P[k,109,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,109,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,109,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,109,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_110:
-	(sum {k in TEACHER, i in 1..4} (P[k,110,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,110,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,110,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,110,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_111:
-	(sum {k in TEACHER, i in 1..4} (P[k,111,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,111,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,111,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,111,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_112:
-	(sum {k in TEACHER, i in 1..4} (P[k,112,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,112,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,112,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,112,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_113:
-	(sum {k in TEACHER, i in 1..4} (P[k,113,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,113,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,113,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,113,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_114:
-	(sum {k in TEACHER, i in 1..4} (P[k,114,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,114,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,114,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,114,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_115:
-	(sum {k in TEACHER, i in 1..4} (P[k,115,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,115,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,115,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,115,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_116:
-	(sum {k in TEACHER, i in 1..4} (P[k,116,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,116,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,116,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,116,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,116,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_117:
-	(sum {k in TEACHER, i in 1..4} (P[k,117,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,117,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,117,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,117,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_118:
-	(sum {k in TEACHER, i in 1..4} (P[k,118,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,118,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,118,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,118,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_119:
-	(sum {k in TEACHER, i in 1..4} (P[k,119,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,119,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,119,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,119,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_120:
-	(sum {k in TEACHER, i in 1..4} (P[k,120,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,120,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,120,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,120,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_121:
-	(sum {k in TEACHER, i in 1..4} (P[k,121,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,121,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,121,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,121,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_122:
-	(sum {k in TEACHER, i in 1..4} (P[k,122,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,122,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,122,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,122,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_123:
-	(sum {k in TEACHER, i in 1..4} (P[k,123,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,123,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,123,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,123,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_124:
-	(sum {k in TEACHER, i in 1..4} (P[k,124,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,124,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,124,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,124,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_125:
-	(sum {k in TEACHER, i in 1..4} (P[k,125,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,125,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,125,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,125,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,125,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_126:
-	(sum {k in TEACHER, i in 1..4} (P[k,126,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,126,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,126,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,126,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_127:
-	(sum {k in TEACHER, i in 1..4} (P[k,127,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,127,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,127,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,127,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_128:
-	(sum {k in TEACHER, i in 1..4} (P[k,128,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,128,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,128,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,128,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_129:
-	(sum {k in TEACHER, i in 1..4} (P[k,129,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,129,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,129,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,129,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_130:
-	(sum {k in TEACHER, i in 1..4} (P[k,130,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,130,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,130,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,130,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_131:
-	(sum {k in TEACHER, i in 1..4} (P[k,131,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,131,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,131,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,131,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_132:
-	(sum {k in TEACHER, i in 1..4} (P[k,132,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,132,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,132,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,132,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_133:
-	(sum {k in TEACHER, i in 1..4} (P[k,133,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,133,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,133,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,133,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,133,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_134:
-	(sum {k in TEACHER, i in 1..4} (P[k,134,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,134,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,134,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,134,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_135:
-	(sum {k in TEACHER, i in 1..4} (P[k,135,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,135,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,135,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,135,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_136:
-	(sum {k in TEACHER, i in 1..4} (P[k,136,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,136,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,136,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,136,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_137:
-	(sum {k in TEACHER, i in 1..4} (P[k,137,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,137,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,137,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,137,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_138:
-	(sum {k in TEACHER, i in 1..4} (P[k,138,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,138,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,138,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,138,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_139:
-	(sum {k in TEACHER, i in 1..4} (P[k,139,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,139,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,139,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,139,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_140:
-	(sum {k in TEACHER, i in 1..4} (P[k,140,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,140,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,140,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,140,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_141:
-	(sum {k in TEACHER, i in 1..4} (P[k,141,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,141,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,141,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,141,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_142:
-	(sum {k in TEACHER, i in 1..4} (P[k,142,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,142,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,142,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,142,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_143:
-	(sum {k in TEACHER, i in 1..4} (P[k,143,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,143,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,143,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,143,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_144:
-	(sum {k in TEACHER, i in 1..4} (P[k,144,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,144,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,144,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,144,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_145:
-	(sum {k in TEACHER, i in 1..4} (P[k,145,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,145,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,145,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,145,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_146:
-	(sum {k in TEACHER, i in 1..4} (P[k,146,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,146,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,146,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,146,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,146,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_147:
-	(sum {k in TEACHER, i in 1..4} (P[k,147,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,147,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,147,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,147,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_148:
-	(sum {k in TEACHER, i in 1..4} (P[k,148,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,148,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,148,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,148,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_149:
-	(sum {k in TEACHER, i in 1..4} (P[k,149,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,149,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,149,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,149,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_150:
-	(sum {k in TEACHER, i in 1..4} (P[k,150,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,150,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,150,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,150,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_151:
-	(sum {k in TEACHER, i in 1..4} (P[k,151,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,151,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,151,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,151,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_152:
-	(sum {k in TEACHER, i in 1..4} (P[k,152,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,152,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,152,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,152,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_153:
-	(sum {k in TEACHER, i in 1..4} (P[k,153,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,153,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,153,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,153,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_154:
-	(sum {k in TEACHER, i in 1..4} (P[k,154,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,154,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,154,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,154,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_155:
-	(sum {k in TEACHER, i in 1..4} (P[k,155,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,155,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,155,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,155,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_156:
-	(sum {k in TEACHER, i in 1..4} (P[k,156,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,156,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,156,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,156,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_157:
-	(sum {k in TEACHER, i in 1..4} (P[k,157,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,157,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,157,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,157,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_158:
-	(sum {k in TEACHER, i in 1..4} (P[k,158,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,158,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,158,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,158,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_159:
-	(sum {k in TEACHER, i in 1..4} (P[k,159,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,159,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,159,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,159,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_160:
-	(sum {k in TEACHER, i in 1..4} (P[k,160,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,160,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,160,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,160,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_161:
-	(sum {k in TEACHER, i in 1..4} (P[k,161,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,161,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,161,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,161,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_162:
-	(sum {k in TEACHER, i in 1..4} (P[k,162,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,162,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,162,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,162,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_163:
-	(sum {k in TEACHER, i in 1..4} (P[k,163,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,163,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,163,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,163,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_164:
-	(sum {k in TEACHER, i in 1..4} (P[k,164,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,164,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,164,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,164,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_165:
-	(sum {k in TEACHER, i in 1..4} (P[k,165,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,165,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,165,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,165,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_166:
-	(sum {k in TEACHER, i in 1..4} (P[k,166,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,166,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,166,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,166,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_167:
-	(sum {k in TEACHER, i in 1..4} (P[k,167,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,167,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,167,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,167,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_168:
-	(sum {k in TEACHER, i in 1..4} (P[k,168,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,168,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,168,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,168,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_169:
-	(sum {k in TEACHER, i in 1..4} (P[k,169,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,169,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,169,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,169,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_170:
-	(sum {k in TEACHER, i in 1..4} (P[k,170,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,170,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,170,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,170,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_171:
-	(sum {k in TEACHER, i in 1..4} (P[k,171,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,171,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,171,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,171,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_172:
-	(sum {k in TEACHER, i in 1..4} (P[k,172,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,172,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,172,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,172,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_173:
-	(sum {k in TEACHER, i in 1..4} (P[k,173,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,173,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,173,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,173,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_174:
-	(sum {k in TEACHER, i in 1..4} (P[k,174,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,174,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,174,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,174,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_175:
-	(sum {k in TEACHER, i in 1..4} (P[k,175,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,175,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,175,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,175,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_176:
-	(sum {k in TEACHER, i in 1..4} (P[k,176,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,176,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,176,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,176,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_177:
-	(sum {k in TEACHER, i in 1..4} (P[k,177,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,177,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,177,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,177,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,177,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_178:
-	(sum {k in TEACHER, i in 1..4} (P[k,178,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,178,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,178,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,178,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,178,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_179:
-	(sum {k in TEACHER, i in 1..4} (P[k,179,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,179,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,179,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,179,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_180:
-	(sum {k in TEACHER, i in 1..4} (P[k,180,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,180,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,180,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,180,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_181:
-	(sum {k in TEACHER, i in 1..4} (P[k,181,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,181,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,181,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,181,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,181,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_182:
-	(sum {k in TEACHER, i in 1..4} (P[k,182,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,182,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,182,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,182,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_183:
-	(sum {k in TEACHER, i in 1..4} (P[k,183,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,183,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,183,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,183,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,183,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_184:
-	(sum {k in TEACHER, i in 1..4} (P[k,184,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,184,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,184,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,184,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_185:
-	(sum {k in TEACHER, i in 1..4} (P[k,185,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,185,1] - SNR[k,1] - SNR[k,2] - 1)) * (product {k in TEACHER} (P[k,185,2] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 3..4} (P[k,185,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..2} (P[k,185,i] * SNR[k,2])) <= 6;
 subject to Maj_Prof_2ndYr_Then_No_New_186:
-	(sum {k in TEACHER, i in 1..4} (P[k,186,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,186,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,186,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,186,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_187:
-	(sum {k in TEACHER, i in 1..4} (P[k,187,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,187,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,187,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,187,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_188:
-	(sum {k in TEACHER, i in 1..4} (P[k,188,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,188,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,188,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,188,i] * SNR[k,2])) <= 2;
 subject to Maj_Prof_2ndYr_Then_No_New_189:
-	(sum {k in TEACHER, i in 1..4} (P[k,189,i] * SNR[k,1])) * (product {k in TEACHER} (P[k,189,1] - SNR[k,1] - SNR[k,2] - 1)) = 0;
+	(sum {k in TEACHER, i in 2..4} (P[k,189,i] * SNR[k,1])) + 3 * (sum {k in TEACHER, i in 1..1} (P[k,189,i] * SNR[k,2])) <= 2;

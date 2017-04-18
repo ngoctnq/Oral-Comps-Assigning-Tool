@@ -1,7 +1,8 @@
 model mock.mod;
 data mock.dat;
 
-option solver "./gecode";
+option solver "./cplex";
 solve;
 display {k in TEACHER, l in STUDENT, i in 1..4: P[k,l,i]=1} >p_data;
 display {i in 1..DAY, j in 1..SESSION, l in STUDENT: Y[i,j,l]=1} >y_data;
+display _ampl_elapsed_time + _total_solve_elapsed_time >t_data;
