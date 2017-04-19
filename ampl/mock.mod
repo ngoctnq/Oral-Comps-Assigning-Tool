@@ -35,7 +35,7 @@ param SNR {TEACHER, 1..2} binary
 	default 0;
 
 param UCAP {TEACHER} integer
-	default 12;
+	default 10;
 param BUSY {1..DAY, 1..SESSION, TEACHER} binary
 	default 0;
 param BUSZ {1..DAY, 1..SESSION, STUDENT} binary
@@ -45,10 +45,13 @@ param TRIPLE {STUDENT} binary
 var Y {1..DAY, 1..SESSION, STUDENT} binary;
 var C {TEACHER, STUDENT} binary;
 var P {TEACHER, STUDENT, 1..4} binary;
-var MAXPALL integer;
 var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;
+var LOL integer;
 
-minimize CONST: MAXPALL;
+minimize OBJ: 1;
+
+subject to WTF:
+	LOL = sum {k in TEACHER} (sum {l in STUDENT} C[k,l] - 6)^2;
 
 subject to Student_Timeslot_Binary {l in STUDENT}:
 	sum {i in 1..DAY, j in 1..SESSION} Y[i,j,l] = 1;
@@ -62,8 +65,6 @@ subject to Prof_Max_Per_Day {i in 1..DAY, k in TEACHER}:
 	sum {j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= 4;
 subject to Prof_Max_All {k in TEACHER}:
 	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= UCAP[k];
-subject to Prof_Max_All_REAL {k in TEACHER}:
-	sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= MAXPALL;
 subject to Prof_Is_Busy {i in 1..DAY, j in 1..SESSION, k in TEACHER}:
 	BUSY[i,j,k] * sum {l in STUDENT} X[i,j,k,l] = 0;
 subject to Stud_Is_Busy {i in 1..DAY, j in 1..SESSION, l in STUDENT}:

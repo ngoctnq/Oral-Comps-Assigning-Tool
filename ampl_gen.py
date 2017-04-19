@@ -9,6 +9,7 @@ import sys
 import pandas as pd
 
 path = sys.argv[1] if len(sys.argv) > 1 else '2016.xlsx'
+tALLfEVEN = False
 
 # initializations
 # st = students DataFrame
@@ -26,7 +27,10 @@ d_count = 3 # number of days
 i_count = 7 # number of sesh/day
 depts_c = len(tools.get_depts(path)) # number of depts
 maxpday = 4 # max no of sesh/day
-maxpall = 12 # max no of sesh/all
+if tALLfEVEN:
+    maxpall = 12 # max no of sesh/all
+else:
+    maxpall = 10 # minimized with AMPL
 
 # cache major/minor list of students
 major = []
@@ -149,18 +153,25 @@ datfile.write(';\n')
 
 # only one Y per student = 1, rest = 0, denote what session hes in
 modfile.write('var Y {1..DAY, 1..SESSION, STUDENT} binary;\n')
-# only 3/4 Cs per student, denoting number of chairs of a student
+# only 3-4 Cs per student, denoting number of chairs of a student
 modfile.write('var C {TEACHER, STUDENT} binary;\n')
 # the order of student's profs
 modfile.write('var P {TEACHER, STUDENT, 1..4} binary;\n')
 
-# TO MINIMIZE: THE MAXIMUM NUMBER OF SESSIONS PER ALL
-modfile.write('var MAXPALL integer;\n')
+if tALLfEVEN:
+    # TO MINIMIZE: THE MAXIMUM NUMBER OF SESSIONS PER ALL
+    modfile.write('var MAXPALL integer;\n')
 
 modfile.write('var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;\n')
 tools.newline(modfile)
-modfile.write('minimize CONST: MAXPALL;\n')
-tools.newline(modfile)
+
+if tALLfEVEN:
+    modfile.write('minimize OBJ: MAXPALL;\n')
+    tools.newline(modfile)
+else:
+    modfile.write('var VRNCE = sum {k in TEACHER} (((sum {l in STUDENT} C[k,l])-'+str(s_count/t_count*3)+')^2)/'+str(t_count)+';\n') 
+    modfile.write('minimize OBJ: VRNCE;\n')
+    tools.newline(modfile)
 
 # legend: v%d%i%p%s
     # %d: day of oral
@@ -187,8 +198,9 @@ modfile.write('subject to Prof_Max_Per_Day {i in 1..DAY, k in TEACHER}:\n\t')
 modfile.write('sum {j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= '+ str(maxpday) + ';\n')
 modfile.write('subject to Prof_Max_All {k in TEACHER}:\n\t')
 modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= UCAP[k];\n')
-modfile.write('subject to Prof_Max_All_REAL {k in TEACHER}:\n\t')
-modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= MAXPALL;\n')
+if tALLfEVEN:
+    modfile.write('subject to Prof_Max_All_REAL {k in TEACHER}:\n\t')
+    modfile.write('sum {i in 1..DAY, j in 1..SESSION, l in STUDENT} X[i,j,k,l] <= MAXPALL;\n')
 
 # profs cannot attend if busy *taps head meme*
 # NOTE cannot be optimized as sum of products equal zero

@@ -1,0 +1,2 @@
+set {i in 1 .. DAY, j in 1 .. SESSION, l in STUDENT: Y[i,j,l] == 1}  := ; # empty
+
