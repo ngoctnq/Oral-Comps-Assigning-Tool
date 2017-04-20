@@ -47,9 +47,15 @@ var C {TEACHER, STUDENT} binary;
 var P {TEACHER, STUDENT, 1..4} binary;
 var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;
 
-#minimize OBJ: MAXPALL;
-minimize OBJ: sum {k in TEACHER} (((sum {l in STUDENT} C[k,l])-6)^2)/80;
+var Z {k in TEACHER} integer;
 
+#minimize OBJ: sum {k in TEACHER} (Z[k]^2);
+minimize OBJ: sum {k in TEACHER} Z[k];
+
+subject to Zdefn1 {k in TEACHER}:
+	sum {l in STUDENT} C[k,l] - 6 <= Z[k];
+subject to Zdefn2 {k in TEACHER}:
+	6 - sum {l in STUDENT} C[k,l] <= Z[k];
 subject to Student_Timeslot_Binary {l in STUDENT}:
 	sum {i in 1..DAY, j in 1..SESSION} Y[i,j,l] = 1;
 subject to Student_Timeslot_Count {i in 1..DAY, j in 1..SESSION, l in STUDENT}:
