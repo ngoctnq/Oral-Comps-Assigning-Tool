@@ -165,13 +165,13 @@ if tALLfEVEN:
 modfile.write('var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;\n')
 tools.newline(modfile)
 
+if not tALLfEVEN:
+    modfile.write('#')
+modfile.write('minimize OBJ: MAXPALL;\n')
 if tALLfEVEN:
-    modfile.write('minimize OBJ: MAXPALL;\n')
-    tools.newline(modfile)
-else:
-    modfile.write('var VRNCE = sum {k in TEACHER} (((sum {l in STUDENT} C[k,l])-'+str(s_count/t_count*3)+')^2)/'+str(t_count)+';\n') 
-    modfile.write('minimize OBJ: VRNCE;\n')
-    tools.newline(modfile)
+    modfile.write('#')
+modfile.write('minimize OBJ: sum {k in TEACHER} (((sum {l in STUDENT} C[k,l])-'+str(s_count/t_count*3)+')^2)/'+str(t_count)+';\n') 
+tools.newline(modfile)
 
 # legend: v%d%i%p%s
     # %d: day of oral

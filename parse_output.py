@@ -66,7 +66,7 @@ for i in range(s_count):
     row = ['','','','','','','','','','','','']
     # get time
     row[2] = date_list[y_list[i][0] - 1]
-    row[3] = session_list[y_list[i][1] -1]
+    row[3] = session_list[y_list[i][1] - 1]
     # get assignment
     tempDF = pd.DataFrame.from_records(p_list, columns=['ts','st','c'])
     sid = st.get_value(i, 'SID')
