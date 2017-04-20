@@ -9,6 +9,8 @@ import sys
 import pandas as pd
 
 path = sys.argv[1] if len(sys.argv) > 1 else '2016.xlsx'
+# true: find the minimum total no of seshs for all faculties
+# false: find the most even schedule for all
 tALLfEVEN = False
 
 # initializations

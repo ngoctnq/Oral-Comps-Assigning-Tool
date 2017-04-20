@@ -54,6 +54,8 @@ while len(p_data)>0:
     process(p_data[0], p_list)
     del p_data[0]
     
+y_list.sort(key=lambda x: x[2])
+
 # print y_list
 # print p_list
     
@@ -64,9 +66,10 @@ prof_sheet = pd.read_excel(path, "Faculty Data")
 # parse each student // keep appending records
 for i in range(s_count):
     row = ['','','','','','','','','','','','']
+    y_entry = y_list[i]
     # get time
-    row[2] = date_list[y_list[i][0] - 1]
-    row[3] = session_list[y_list[i][1] - 1]
+    row[2] = date_list[y_entry[0] - 1]
+    row[3] = session_list[y_entry[1] - 1]
     # get assignment
     tempDF = pd.DataFrame.from_records(p_list, columns=['ts','st','c'])
     sid = st.get_value(i, 'SID')
