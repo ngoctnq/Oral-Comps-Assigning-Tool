@@ -220,7 +220,7 @@ modfile.write('sum {i in 1..DAY, j in 1..SESSION} X[i,j,k,l] = C[k,l];\n')
 modfile.write('subject to Integrity_P_Nontriple {l in STUDENT, i in 1..3}:\n\t')
 modfile.write('sum {k in TEACHER} P[k,l,i] = 1;\n')
 modfile.write('subject to Integrity_P_Triple {l in STUDENT}:\n\t')
-modfile.write('sum {k in TEACHER} P[k,l,4] <= 1;\n')
+modfile.write('sum {k in TEACHER} P[k,l,4] = TRIPLE[l];\n')
 
 # timeslot of Ps
 modfile.write('subject to Prof_Student_Timeslot {k in TEACHER, l in STUDENT}:\n\t')
@@ -245,7 +245,7 @@ for i in range(s_count):
             modfile.write('(')
         modfile.write('DEPT' + str(minor[i][0]))
         if mn_c > 1:
-            for j in range(mn_c):
+            for j in range(1,mn_c):
                 modfile.write(' union DEPT' + str(minor[i][j]))
             modfile.write(')')
         modfile.write('} P[k,' + str(i) + ',2] = 1;\n')

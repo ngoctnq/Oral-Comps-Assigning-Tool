@@ -47,8 +47,8 @@ var C {TEACHER, STUDENT} binary;
 var P {TEACHER, STUDENT, 1..4} binary;
 var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;
 
-minimize OBJ: 1;
-#minimize OBJ: sum {k in TEACHER} (((sum {l in STUDENT} C[k,l])-6)^2)/80;
+#minimize OBJ: MAXPALL;
+minimize OBJ: sum {k in TEACHER} (((sum {l in STUDENT} C[k,l])-6)^2)/80;
 
 subject to Student_Timeslot_Binary {l in STUDENT}:
 	sum {i in 1..DAY, j in 1..SESSION} Y[i,j,l] = 1;
@@ -71,13 +71,13 @@ subject to Is_Prof_Student_Pair {k in TEACHER, l in STUDENT}:
 subject to Integrity_P_Nontriple {l in STUDENT, i in 1..3}:
 	sum {k in TEACHER} P[k,l,i] = 1;
 subject to Integrity_P_Triple {l in STUDENT}:
-	sum {k in TEACHER} P[k,l,4] <= 1;
+	sum {k in TEACHER} P[k,l,4] = TRIPLE[l];
 subject to Prof_Student_Timeslot {k in TEACHER, l in STUDENT}:
 	sum {i in 1..DAY, j in 1..SESSION} X[i,j,k,l] = sum {i in 1..4} P[k,l,i];
 subject to Prof_Student_0_Dept_0:
 	sum {k in DEPT0} P[k,0,1] = 1;
 subject to Prof_Student_0_Minor:
-	sum {k in (DEPT1 union DEPT1 union DEPT2)} P[k,0,2] = 1;
+	sum {k in (DEPT1 union DEPT2)} P[k,0,2] = 1;
 subject to Prof_Student_0_AtLarge:
 	sum {k in (TEACHER diff DEPT0 diff DEPT1 diff DEPT2)} P[k,0,3 + TRIPLE[0]] = 1;
 subject to Prof_Student_1_Dept_3:
@@ -193,7 +193,7 @@ subject to Prof_Student_18_AtLarge:
 subject to Prof_Student_19_Dept_12:
 	sum {k in DEPT12} P[k,19,1] = 1;
 subject to Prof_Student_19_Minor:
-	sum {k in (DEPT0 union DEPT0 union DEPT6)} P[k,19,2] = 1;
+	sum {k in (DEPT0 union DEPT6)} P[k,19,2] = 1;
 subject to Prof_Student_19_AtLarge:
 	sum {k in (TEACHER diff DEPT12 diff DEPT0 diff DEPT6)} P[k,19,3 + TRIPLE[19]] = 1;
 subject to Prof_Student_20_Dept_1:
@@ -253,7 +253,7 @@ subject to Prof_Student_28_AtLarge:
 subject to Prof_Student_29_Dept_3:
 	sum {k in DEPT3} P[k,29,1] = 1;
 subject to Prof_Student_29_Minor:
-	sum {k in (DEPT0 union DEPT0 union DEPT10)} P[k,29,2] = 1;
+	sum {k in (DEPT0 union DEPT10)} P[k,29,2] = 1;
 subject to Prof_Student_29_AtLarge:
 	sum {k in (TEACHER diff DEPT3 diff DEPT0 diff DEPT10)} P[k,29,3 + TRIPLE[29]] = 1;
 subject to Prof_Student_30_Dept_4:
@@ -331,7 +331,7 @@ subject to Prof_Student_41_AtLarge:
 subject to Prof_Student_42_Dept_9:
 	sum {k in DEPT9} P[k,42,1] = 1;
 subject to Prof_Student_42_Minor:
-	sum {k in (DEPT18 union DEPT18 union DEPT19)} P[k,42,2] = 1;
+	sum {k in (DEPT18 union DEPT19)} P[k,42,2] = 1;
 subject to Prof_Student_42_AtLarge:
 	sum {k in (TEACHER diff DEPT9 diff DEPT18 diff DEPT19)} P[k,42,3 + TRIPLE[42]] = 1;
 subject to Prof_Student_43_Dept_23:
@@ -349,7 +349,7 @@ subject to Prof_Student_44_AtLarge:
 subject to Prof_Student_45_Dept_4:
 	sum {k in DEPT4} P[k,45,1] = 1;
 subject to Prof_Student_45_Minor:
-	sum {k in (DEPT9 union DEPT9 union DEPT5)} P[k,45,2] = 1;
+	sum {k in (DEPT9 union DEPT5)} P[k,45,2] = 1;
 subject to Prof_Student_45_AtLarge:
 	sum {k in (TEACHER diff DEPT4 diff DEPT9 diff DEPT5)} P[k,45,3 + TRIPLE[45]] = 1;
 subject to Prof_Student_46_Dept_0:
@@ -361,7 +361,7 @@ subject to Prof_Student_46_AtLarge:
 subject to Prof_Student_47_Dept_11:
 	sum {k in DEPT11} P[k,47,1] = 1;
 subject to Prof_Student_47_Minor:
-	sum {k in (DEPT9 union DEPT9 union DEPT1)} P[k,47,2] = 1;
+	sum {k in (DEPT9 union DEPT1)} P[k,47,2] = 1;
 subject to Prof_Student_47_AtLarge:
 	sum {k in (TEACHER diff DEPT11 diff DEPT9 diff DEPT1)} P[k,47,3 + TRIPLE[47]] = 1;
 subject to Prof_Student_48_Dept_9:
@@ -391,7 +391,7 @@ subject to Prof_Student_51_AtLarge:
 subject to Prof_Student_52_Dept_5:
 	sum {k in DEPT5} P[k,52,1] = 1;
 subject to Prof_Student_52_Minor:
-	sum {k in (DEPT9 union DEPT9 union DEPT1)} P[k,52,2] = 1;
+	sum {k in (DEPT9 union DEPT1)} P[k,52,2] = 1;
 subject to Prof_Student_52_AtLarge:
 	sum {k in (TEACHER diff DEPT5 diff DEPT9 diff DEPT1)} P[k,52,3 + TRIPLE[52]] = 1;
 subject to Prof_Student_53_Dept_18:
@@ -619,7 +619,7 @@ subject to Prof_Student_89_AtLarge:
 subject to Prof_Student_90_Dept_13:
 	sum {k in DEPT13} P[k,90,1] = 1;
 subject to Prof_Student_90_Minor:
-	sum {k in (DEPT5 union DEPT5 union DEPT26)} P[k,90,2] = 1;
+	sum {k in (DEPT5 union DEPT26)} P[k,90,2] = 1;
 subject to Prof_Student_90_AtLarge:
 	sum {k in (TEACHER diff DEPT13 diff DEPT5 diff DEPT26)} P[k,90,3 + TRIPLE[90]] = 1;
 subject to Prof_Student_91_Dept_5:
@@ -631,7 +631,7 @@ subject to Prof_Student_91_AtLarge:
 subject to Prof_Student_92_Dept_10:
 	sum {k in DEPT10} P[k,92,1] = 1;
 subject to Prof_Student_92_Minor:
-	sum {k in (DEPT6 union DEPT6 union DEPT26)} P[k,92,2] = 1;
+	sum {k in (DEPT6 union DEPT26)} P[k,92,2] = 1;
 subject to Prof_Student_92_AtLarge:
 	sum {k in (TEACHER diff DEPT10 diff DEPT6 diff DEPT26)} P[k,92,3 + TRIPLE[92]] = 1;
 subject to Prof_Student_93_Dept_17:
@@ -649,7 +649,7 @@ subject to Prof_Student_94_AtLarge:
 subject to Prof_Student_95_Dept_5:
 	sum {k in DEPT5} P[k,95,1] = 1;
 subject to Prof_Student_95_Minor:
-	sum {k in (DEPT9 union DEPT9 union DEPT4)} P[k,95,2] = 1;
+	sum {k in (DEPT9 union DEPT4)} P[k,95,2] = 1;
 subject to Prof_Student_95_AtLarge:
 	sum {k in (TEACHER diff DEPT5 diff DEPT9 diff DEPT4)} P[k,95,3 + TRIPLE[95]] = 1;
 subject to Prof_Student_96_Dept_2:
@@ -667,7 +667,7 @@ subject to Prof_Student_97_AtLarge:
 subject to Prof_Student_98_Dept_19:
 	sum {k in DEPT19} P[k,98,1] = 1;
 subject to Prof_Student_98_Minor:
-	sum {k in (DEPT18 union DEPT18 union DEPT23)} P[k,98,2] = 1;
+	sum {k in (DEPT18 union DEPT23)} P[k,98,2] = 1;
 subject to Prof_Student_98_AtLarge:
 	sum {k in (TEACHER diff DEPT19 diff DEPT18 diff DEPT23)} P[k,98,3 + TRIPLE[98]] = 1;
 subject to Prof_Student_99_Dept_0:
@@ -697,7 +697,7 @@ subject to Prof_Student_102_AtLarge:
 subject to Prof_Student_103_Dept_1:
 	sum {k in DEPT1} P[k,103,1] = 1;
 subject to Prof_Student_103_Minor:
-	sum {k in (DEPT22 union DEPT22 union DEPT14)} P[k,103,2] = 1;
+	sum {k in (DEPT22 union DEPT14)} P[k,103,2] = 1;
 subject to Prof_Student_103_AtLarge:
 	sum {k in (TEACHER diff DEPT1 diff DEPT22 diff DEPT14)} P[k,103,3 + TRIPLE[103]] = 1;
 subject to Prof_Student_104_Dept_1:
@@ -709,7 +709,7 @@ subject to Prof_Student_104_AtLarge:
 subject to Prof_Student_105_Dept_0:
 	sum {k in DEPT0} P[k,105,1] = 1;
 subject to Prof_Student_105_Minor:
-	sum {k in (DEPT11 union DEPT11 union DEPT6)} P[k,105,2] = 1;
+	sum {k in (DEPT11 union DEPT6)} P[k,105,2] = 1;
 subject to Prof_Student_105_AtLarge:
 	sum {k in (TEACHER diff DEPT0 diff DEPT11 diff DEPT6)} P[k,105,3 + TRIPLE[105]] = 1;
 subject to Prof_Student_106_Dept_1:
@@ -745,7 +745,7 @@ subject to Prof_Student_110_AtLarge:
 subject to Prof_Student_111_Dept_6:
 	sum {k in DEPT6} P[k,111,1] = 1;
 subject to Prof_Student_111_Minor:
-	sum {k in (DEPT18 union DEPT18 union DEPT7)} P[k,111,2] = 1;
+	sum {k in (DEPT18 union DEPT7)} P[k,111,2] = 1;
 subject to Prof_Student_111_AtLarge:
 	sum {k in (TEACHER diff DEPT6 diff DEPT18 diff DEPT7)} P[k,111,3 + TRIPLE[111]] = 1;
 subject to Prof_Student_112_Dept_4:
@@ -763,7 +763,7 @@ subject to Prof_Student_113_AtLarge:
 subject to Prof_Student_114_Dept_17:
 	sum {k in DEPT17} P[k,114,1] = 1;
 subject to Prof_Student_114_Minor:
-	sum {k in (DEPT26 union DEPT26 union DEPT10 union DEPT16)} P[k,114,2] = 1;
+	sum {k in (DEPT26 union DEPT10 union DEPT16)} P[k,114,2] = 1;
 subject to Prof_Student_114_AtLarge:
 	sum {k in (TEACHER diff DEPT17 diff DEPT26 diff DEPT10 diff DEPT16)} P[k,114,3 + TRIPLE[114]] = 1;
 subject to Prof_Student_115_Dept_6:
@@ -787,7 +787,7 @@ subject to Prof_Student_117_AtLarge:
 subject to Prof_Student_118_Dept_18:
 	sum {k in DEPT18} P[k,118,1] = 1;
 subject to Prof_Student_118_Minor:
-	sum {k in (DEPT5 union DEPT5 union DEPT26)} P[k,118,2] = 1;
+	sum {k in (DEPT5 union DEPT26)} P[k,118,2] = 1;
 subject to Prof_Student_118_AtLarge:
 	sum {k in (TEACHER diff DEPT18 diff DEPT5 diff DEPT26)} P[k,118,3 + TRIPLE[118]] = 1;
 subject to Prof_Student_119_Dept_6:
@@ -799,7 +799,7 @@ subject to Prof_Student_119_AtLarge:
 subject to Prof_Student_120_Dept_10:
 	sum {k in DEPT10} P[k,120,1] = 1;
 subject to Prof_Student_120_Minor:
-	sum {k in (DEPT26 union DEPT26 union DEPT4)} P[k,120,2] = 1;
+	sum {k in (DEPT26 union DEPT4)} P[k,120,2] = 1;
 subject to Prof_Student_120_AtLarge:
 	sum {k in (TEACHER diff DEPT10 diff DEPT26 diff DEPT4)} P[k,120,3 + TRIPLE[120]] = 1;
 subject to Prof_Student_121_Dept_2:
@@ -895,7 +895,7 @@ subject to Prof_Student_135_AtLarge:
 subject to Prof_Student_136_Dept_5:
 	sum {k in DEPT5} P[k,136,1] = 1;
 subject to Prof_Student_136_Minor:
-	sum {k in (DEPT9 union DEPT9 union DEPT27)} P[k,136,2] = 1;
+	sum {k in (DEPT9 union DEPT27)} P[k,136,2] = 1;
 subject to Prof_Student_136_AtLarge:
 	sum {k in (TEACHER diff DEPT5 diff DEPT9 diff DEPT27)} P[k,136,3 + TRIPLE[136]] = 1;
 subject to Prof_Student_137_Dept_19:
@@ -991,7 +991,7 @@ subject to Prof_Student_151_AtLarge:
 subject to Prof_Student_152_Dept_1:
 	sum {k in DEPT1} P[k,152,1] = 1;
 subject to Prof_Student_152_Minor:
-	sum {k in (DEPT23 union DEPT23 union DEPT7)} P[k,152,2] = 1;
+	sum {k in (DEPT23 union DEPT7)} P[k,152,2] = 1;
 subject to Prof_Student_152_AtLarge:
 	sum {k in (TEACHER diff DEPT1 diff DEPT23 diff DEPT7)} P[k,152,3 + TRIPLE[152]] = 1;
 subject to Prof_Student_153_Dept_3:
@@ -1039,13 +1039,13 @@ subject to Prof_Student_159_AtLarge:
 subject to Prof_Student_160_Dept_4:
 	sum {k in DEPT4} P[k,160,1] = 1;
 subject to Prof_Student_160_Minor:
-	sum {k in (DEPT12 union DEPT12 union DEPT14)} P[k,160,2] = 1;
+	sum {k in (DEPT12 union DEPT14)} P[k,160,2] = 1;
 subject to Prof_Student_160_AtLarge:
 	sum {k in (TEACHER diff DEPT4 diff DEPT12 diff DEPT14)} P[k,160,3 + TRIPLE[160]] = 1;
 subject to Prof_Student_161_Dept_3:
 	sum {k in DEPT3} P[k,161,1] = 1;
 subject to Prof_Student_161_Minor:
-	sum {k in (DEPT9 union DEPT9 union DEPT5)} P[k,161,2] = 1;
+	sum {k in (DEPT9 union DEPT5)} P[k,161,2] = 1;
 subject to Prof_Student_161_AtLarge:
 	sum {k in (TEACHER diff DEPT3 diff DEPT9 diff DEPT5)} P[k,161,3 + TRIPLE[161]] = 1;
 subject to Prof_Student_162_Dept_6:
@@ -1075,13 +1075,13 @@ subject to Prof_Student_165_AtLarge:
 subject to Prof_Student_166_Dept_18:
 	sum {k in DEPT18} P[k,166,1] = 1;
 subject to Prof_Student_166_Minor:
-	sum {k in (DEPT5 union DEPT5 union DEPT4)} P[k,166,2] = 1;
+	sum {k in (DEPT5 union DEPT4)} P[k,166,2] = 1;
 subject to Prof_Student_166_AtLarge:
 	sum {k in (TEACHER diff DEPT18 diff DEPT5 diff DEPT4)} P[k,166,3 + TRIPLE[166]] = 1;
 subject to Prof_Student_167_Dept_15:
 	sum {k in DEPT15} P[k,167,1] = 1;
 subject to Prof_Student_167_Minor:
-	sum {k in (DEPT14 union DEPT14 union DEPT0)} P[k,167,2] = 1;
+	sum {k in (DEPT14 union DEPT0)} P[k,167,2] = 1;
 subject to Prof_Student_167_AtLarge:
 	sum {k in (TEACHER diff DEPT15 diff DEPT14 diff DEPT0)} P[k,167,3 + TRIPLE[167]] = 1;
 subject to Prof_Student_168_Dept_0:
@@ -1099,7 +1099,7 @@ subject to Prof_Student_169_AtLarge:
 subject to Prof_Student_170_Dept_18:
 	sum {k in DEPT18} P[k,170,1] = 1;
 subject to Prof_Student_170_Minor:
-	sum {k in (DEPT1 union DEPT1 union DEPT21)} P[k,170,2] = 1;
+	sum {k in (DEPT1 union DEPT21)} P[k,170,2] = 1;
 subject to Prof_Student_170_AtLarge:
 	sum {k in (TEACHER diff DEPT18 diff DEPT1 diff DEPT21)} P[k,170,3 + TRIPLE[170]] = 1;
 subject to Prof_Student_171_Dept_4:
@@ -1159,7 +1159,7 @@ subject to Prof_Student_179_AtLarge:
 subject to Prof_Student_180_Dept_3:
 	sum {k in DEPT3} P[k,180,1] = 1;
 subject to Prof_Student_180_Minor:
-	sum {k in (DEPT2 union DEPT2 union DEPT5)} P[k,180,2] = 1;
+	sum {k in (DEPT2 union DEPT5)} P[k,180,2] = 1;
 subject to Prof_Student_180_AtLarge:
 	sum {k in (TEACHER diff DEPT3 diff DEPT2 diff DEPT5)} P[k,180,3 + TRIPLE[180]] = 1;
 subject to Prof_Student_181_Dept_19:
