@@ -32,7 +32,7 @@ maxpday = 4 # max no of sesh/day
 if tALLfEVEN:
     maxpall = 12 # max no of sesh/all
 else:
-    maxpall = 10 # minimized with AMPL
+    maxpall = 9 # minimized with AMPL
 
 # cache major/minor list of students
 major = []
@@ -163,6 +163,8 @@ modfile.write('var P {TEACHER, STUDENT, 1..4} binary;\n')
 if tALLfEVEN:
     # TO MINIMIZE: THE MAXIMUM NUMBER OF SESSIONS PER ALL
     modfile.write('var MAXPALL integer;\n')
+else:
+    modfile.write('var Z {k in TEACHER} integer;\n')
 
 modfile.write('var X {1..DAY, 1..SESSION, TEACHER, STUDENT} binary;\n')
 tools.newline(modfile)
@@ -172,8 +174,16 @@ if not tALLfEVEN:
 modfile.write('minimize OBJ: MAXPALL;\n')
 if tALLfEVEN:
     modfile.write('#')
-modfile.write('minimize OBJ: sum {k in TEACHER} (((sum {l in STUDENT} C[k,l])-'+str(s_count/t_count*3)+')^2)/'+str(t_count)+';\n') 
+modfile.write('minimize OBJ: sum {k in TEACHER} Z[k];\n')
 tools.newline(modfile)
+
+avg = str(int(s_count * 3 / t_count))
+#print avg
+if not tALLfEVEN:
+    modfile.write('subject to Zdefn1 {k in TEACHER}:\n\t')
+    modfile.write('sum {l in STUDENT} C[k,l] - ' + avg + ' <= Z[k];\n')
+    modfile.write('subject to Zdefn2 {k in TEACHER}:\n\t')
+    modfile.write(avg + ' - sum {l in STUDENT} C[k,l] <= Z[k];\n')
 
 # legend: v%d%i%p%s
     # %d: day of oral
@@ -229,12 +239,11 @@ modfile.write('sum {i in 1..DAY, j in 1..SESSION} X[i,j,k,l] = sum {i in 1..4} P
 # department oral chair
 for i in range(s_count):
     mj_c = len(major[i])
-    # sick em on da majors
-    # NOTE WOULD ALREADY INCLUDE A 3RD POSSIBLE MAJOR
+    # 3-major students case handled
     for j in range(mj_c):
         modfile.write('subject to Prof_Student_' + str(i) + '_Dept_' + str(major[i][j]) + ':\n\t')
-        modfile.write('sum {k in DEPT' + str(major[i][j]) + '} P[k,' +
-            str(i) + ',' + str(j+1) + '] = 1;\n')
+        modfile.write('sum {k in DEPT' + str(major[i][j]) + ', i in 1..' + str(mj_c) + '} P[k,' +
+            str(i) + ',i] = 1;\n')
 
     # if only one major -> u hab da minor
     mn_c = len(minor[i])
@@ -258,26 +267,17 @@ for i in range(s_count):
         modfile.write(' diff DEPT' + str(minor[i][j]))
     modfile.write(')} P[k,' + str(i) + ',3 + TRIPLE[' + str(i) + ']] = 1;\n')
 
-# not all new major chair
-for l in range(s_count):
-    mj_c = len(major[l])
-    modfile.write('subject to No_New_Major_Board_Student_' + str(l) + ':\n\t')
-    modfile.write('sum {k in TEACHER, l in STUDENT, i in 1..' + str(mj_c) + '} P[k,l,i] * SNR[k,1] = 0;\n')
+# not new 1st major chair
+modfile.write('subject to No_New_1st_Major_Students:\n\t')
+modfile.write('sum {k in TEACHER, l in STUDENT} P[k,l,1] * SNR[k,1] = 0;\n')
 
 # if 2nd yr major chair -> no new anythin
-for l in range(s_count):
-    mj_c = len(major[l])
-    modfile.write('subject to Maj_Prof_2ndYr_Then_No_New_' + str(l) + ':\n\t')
-    # either there is no first year (then the sum = 0)
-    modfile.write('(sum {k in TEACHER, i in ' + str(mj_c+1) + '..4} (P[k,' + str(l) + ',i] * SNR[k,1])) + ')
-    # or there is a 3rd year mj
-    modfile.write('3 * (sum {k in TEACHER, i in 1..' + str(mj_c) + '} (P[k,' + str(l) + ',i] * SNR[k,2]))')
-    modfile.write(' <= ')
-    if mj_c == 1:
-        modfile.write('2')
-    else:
-        modfile.write(str(3 * mj_c))
-    modfile.write(';\n')
+modfile.write('subject to Maj_Prof_2ndYr_Then_No_New {l in STUDENT}:\n\t')
+# either there is no first year (then the sum = 0)
+modfile.write('(sum {k in TEACHER, i in 2..4} (P[k,l,i] * SNR[k,1])) + ')
+# or there is a 3rd year mj
+modfile.write('3 * (sum {k in TEACHER} (P[k,l,1] * SNR[k,2]))')
+modfile.write(' <= 3;\n')
 
 modfile.close()
 datfile.close()

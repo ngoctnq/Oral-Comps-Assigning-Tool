@@ -1,2 +1,4 @@
-_ampl_elapsed_time + _total_solve_elapsed_time = 377.335
+_ampl_elapsed_time + _total_solve_elapsed_time = 368.783
+
+OBJ = 43
 
