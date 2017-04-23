@@ -75,6 +75,10 @@ for i in range(t_count):
     datfile.write(' ' + str(i))
 datfile.write(';\n')
 
+# caching the list of division faculty
+modfile.write('set DIV1;\nset DIV2;\nset DIV3;\n')
+# TODO ACTUAL DATFILE WRITING
+
 # caching the list of professors for each dept
 for i in range(depts_c):
     datfile.write('set DEPT' + str(i) + " :=")
@@ -266,6 +270,24 @@ for i in range(s_count):
     for j in range(mn_c):
         modfile.write(' diff DEPT' + str(minor[i][j]))
     modfile.write(')} P[k,' + str(i) + ',3 + TRIPLE[' + str(i) + ']] = 1;\n')
+
+    ### EXPERIMENTAL CODE FROM HERE
+    modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D1:\n\t')
+    # if you are a triple major, you have special treatment
+    if mj_c == 3:
+        # TODO ACTUALLY IMPLEMENT THINGS HERE
+        modfile.write('TRIPLE[' + str(i) + '] = 1;\n')
+    # else, you have 2 cherry picked fac and now the 3rd
+    else:
+        modfile.write('(sum {k in DIV1} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2])) * ')
+        modfile.write('sum {k in DIV1} P[k,' + str(i) + ',3] = 0;\n')
+        modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D2:\n\t')
+        modfile.write('(sum {k in DIV2} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2])) * ')
+        modfile.write('sum {k in DIV2} P[k,' + str(i) + ',3] = 0;\n')
+        modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D3:\n\t')
+        modfile.write('(sum {k in DIV3} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2])) * ')
+        modfile.write('sum {k in DIV3} P[k,' + str(i) + ',3] = 0;\n')
+    ### END OF NEW EXPERIMENTAL CODE
 
 # not new 1st major chair
 modfile.write('subject to No_New_1st_Major_Students:\n\t')

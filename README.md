@@ -4,12 +4,12 @@ Assigning oral comprehensive exam chairs for Wabash seniors.
 ## Introduction:
 The problem is wellknown to Wabash students. The actual prompt is in the file `prompt.pdf`.
 
-This solver is basically a proof-of-concept - that is why GeCode is used, since it is open-source, and thus denotes that a free solution is available to create. However, if the school decides to use AMPL everytime it needs, be my guest.
+This solver is basically a proof-of-concept - that is why CPLEX/Gurobi is used for a considerable boost in speed; CBC is recommended, since it is open-source, and thus denotes that a free solution is available to create. However, if the school decides to use AMPL everytime it needs, be my guest.
 
 ## How it works:
-`init.py` takes in the two csv files and parse the data out - this serves as a connector to any data container and form. Then, `ampl_gen.py` takes in 2 pandas DataFrame and yield a AMPL script. Finally, use AMPL/AMPLIDE to solve the file - it's a complete BIP problem, not completely linear however.
+`init.py` takes in the two csv files and parse the data out - this serves as a connector to any data container and form. Then, `ampl_gen.py` takes in 2 pandas DataFrame and yield a AMPL script. Then, use AMPL/AMPLIDE to solve the file. Finally, run `parse_output.py`. Each of the python script takes an optional parameter that is the location of the Excel spreadsheet to be supplied by the school - by default it is set to '2016.xlsx.'
 
-The `LOGICAL_FLAG` denotes if the script is to create a problem with logical constraints - else, everything is arithmetic. Set `LOGICAL_FLAG = False` - this gives a full arithmetic constraint, and the previous solvers work magically.
+This is a complete BIP problem, not completely linear however, in the sense that there are pairs that cannot be mutually zero. After handling basis variable enterring/leaving process for that, this problem become linear. The objective function is to minimize sum of squares, but since it is too slow for this project, I decided to minimize sum of absolute values (norm-1 instead of norm-2).
 
 ## Howto:
 <i>Step 0:</i> Manually remove bad data: for example, Allen M. Betts and his unavailability, Jensen A. Kirch his EMU minor (corrected to EDU).
@@ -26,15 +26,22 @@ The `LOGICAL_FLAG` denotes if the script is to create a problem with logical con
 
 ```bash
 cd Oral-Comps-Assigning-Tool
-./main.sh [path/to/xlsx]
+bash ensure_python.sh
 ```
-<sub>Note: This script, by default, will not use superuser privilege, and thus only install python modules locally for the current user. If this is were to install globally, `sudo` it. If you know how to use `virtualenv`, please fork.</sub>
+<sub>Note: This script, by default, will not use superuser privilege, and thus only install python modules locally for the current user. If this is were to install globally, `sudo` it. If you know how to use `virtualenv`, this project uses Python 2, and all the modules this needs are `pandas` and `xlrd`.</sub>
 
 <i> Step 3:</i>
-Voila - It's easy as 1-2-3! Do what you want with the new generated `schedule.csv`.
+Run even more code:
+
+```bash
+bash main.sh
+```
+
+only for the school's demonstration laptop. Edit this based on installation of `ampl`, and etc.
+
+<i> Step 4:</i>
+Voila - It's easy as 1-2-3(-4?)! Do what you want with the new generated `schedule.csv`.
 
 ## Notes
-- no verification of constraint satisfaction for `locsol`
-- `ipopt` looks nice but treats everything as continuous
-- `knitro` took 4 days and no solutions
-- `gecode`, `baron`, `bonmin` will be tried later
+- Anything other than CPLEX or Gurobi will be too slow for this.
+- CPLEX linearizes quadratic objective, triggering a bug or such that says there are no feasible solutions - necessary flags are needed to prevent this. See this for more info: https://groups.google.com/forum/#!topic/ampl/YO65Sr0rwL4
