@@ -9,6 +9,7 @@ import sys
 import pandas as pd
 
 path = sys.argv[1] if len(sys.argv) > 1 else '2016.xlsx'
+path2 = sys.argv[2] if len(sys.argv) > 2 else 'academic_divisions.xlsx'
 # true: find the minimum total no of seshs for all faculties
 # false: find the most even schedule for all
 tALLfEVEN = False
