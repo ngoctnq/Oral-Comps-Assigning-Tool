@@ -18,7 +18,7 @@ Manually remove bad data: for example, Allen M. Betts and his unavailability, Je
 <sub>Note: The department names are truncated to the last 3 characters to deal with MLL faculties - unforeseen side effects might occur if departments are named weirdly. Also, faculties in departments that no current senior is in will be ignored.</sub>
 
 <b>Step 0.5:</b>
-Install AMPL, with GeCode solver. The directory of AMPL can be changed in `main.sh`, and the replacement for GeCode can be changed in `ampl/mock.prod`.
+Install AMPL, with CBC solver if you somehow don't like super-fast but propriety solvers.
 
 <b>Step 1:</b>
 Open Terminal and run `git clone https://github.com/ngoctnq/Oral-Comps-Assigning-Tool.git`. The file is made so that you can run on any Mac at the school and be good to go.
@@ -39,7 +39,7 @@ Run `init.py`, `ampl_gen.py`, then `ampl` with `mock.mod` and `mock.dat`, and fi
 
 ```bash
 python2 init.py [/path/to/ppl/data='2016.xlsx']
-python2 ampl_gen.py [/path/to/ppl/data='2016.xlsx'] [/path/to/div/data='academic_divisions.xlsx']
+python2 ampl_gen.py [/path/to/ppl/data='2016.xlsx'] [/path/to/div/data='divisions.xlsx']
 python2 parse_output.py [/path/to/ppl/data='2016.xlsx']
 ```
 

@@ -9,10 +9,10 @@ import sys
 import pandas as pd
 
 path = sys.argv[1] if len(sys.argv) > 1 else '2016.xlsx'
-path2 = sys.argv[2] if len(sys.argv) > 2 else 'academic_divisions.xlsx'
+path2 = sys.argv[2] if len(sys.argv) > 2 else 'divisions.xlsx'
 # true: find the minimum total no of seshs for all faculties
 # false: find the most even schedule for all
-tALLfEVEN = False
+tALLfEVEN = True
 
 # initializations
 # st = students DataFrame
@@ -23,12 +23,15 @@ st, ts = tools.import_data()
 modfile = open('ampl/mock.mod', 'w')
 datfile = open('ampl/mock.dat', 'w')
 
+dept_list = tools.get_depts(path)
+div_dept, div_prof = tools.get_div(path, path2)
+
 # cache
 s_count = len(st) # number of students
 t_count = len(ts) # number of teachers
 d_count = 3 # number of days
 i_count = 7 # number of sesh/day
-depts_c = len(tools.get_depts(path)) # number of depts
+depts_c = len(dept_list) # number of depts
 maxpday = 4 # max no of sesh/day
 if tALLfEVEN:
     maxpall = 12 # max no of sesh/all
@@ -79,6 +82,11 @@ datfile.write(';\n')
 # caching the list of division faculty
 modfile.write('set DIV1;\nset DIV2;\nset DIV3;\n')
 # TODO ACTUAL DATFILE WRITING
+for j in range(3):
+    datfile.write('set DIV' + str(j+1) +' :=')
+    for i in div_prof[j]:
+        datfile.write(' ' + str(i))
+    datfile.write(';\n')
 
 # caching the list of professors for each dept
 for i in range(depts_c):
@@ -263,23 +271,41 @@ for i in range(s_count):
                 modfile.write(' union DEPT' + str(minor[i][j]))
             modfile.write(')')
         modfile.write('} P[k,' + str(i) + ',2] = 1;\n')
-    # you will always have 1 at-large regardless of no of Maj/min
-    modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge:\n\t')
-    modfile.write('sum {k in (TEACHER')
-    for j in range(mj_c):
-        modfile.write(' diff DEPT' + str(major[i][j]))
-    for j in range(mn_c):
-        modfile.write(' diff DEPT' + str(minor[i][j]))
-    modfile.write(')} P[k,' + str(i) + ',3 + TRIPLE[' + str(i) + ']] = 1;\n')
+
+    # # OLD WORKING CODE, MORE CONSTRAINED
+    # # you will always have 1 at-large regardless of no of Maj/min
+    # modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge:\n\t')
+    # modfile.write('sum {k in (TEACHER')
+    # for j in range(mj_c):
+    #     modfile.write(' diff DEPT' + str(major[i][j]))
+    # for j in range(mn_c):
+    #     modfile.write(' diff DEPT' + str(minor[i][j]))
+    # modfile.write(')} P[k,' + str(i) + ',3 + TRIPLE[' + str(i) + ']] = 1;\n')
 
     ### EXPERIMENTAL CODE FROM HERE
-    modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D1:\n\t')
     # if you are a triple major, you have special treatment
     if mj_c == 3:
-        # TODO ACTUALLY IMPLEMENT THINGS HERE
-        modfile.write('TRIPLE[' + str(i) + '] = 1;\n')
+        if tools.three_depted(major[i], div_dept):
+            modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge:\n\t')
+            modfile.write('sum {k in (TEACHER')
+            for j in range(mj_c):
+                modfile.write(' diff DEPT' + str(major[i][j]))
+            for j in range(mn_c):
+                modfile.write(' diff DEPT' + str(minor[i][j]))
+            modfile.write(')} P[k,' + str(i) + ',3 + TRIPLE[' + str(i) + ']] = 1;\n')
+        else:
+            modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D1:\n\t')
+            modfile.write('(sum {k in DIV1} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2] + P[k,' + str(i) + ',3])) * ')
+            modfile.write('sum {k in DIV1} P[k,' + str(i) + ',4] = 0;\n')
+            modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D2:\n\t')
+            modfile.write('(sum {k in DIV2} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2] + P[k,' + str(i) + ',3])) * ')
+            modfile.write('sum {k in DIV2} P[k,' + str(i) + ',4] = 0;\n')
+            modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D3:\n\t')
+            modfile.write('(sum {k in DIV3} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2] + P[k,' + str(i) + ',3])) * ')
+            modfile.write('sum {k in DIV3} P[k,' + str(i) + ',4] = 0;\n')
     # else, you have 2 cherry picked fac and now the 3rd
     else:
+        modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D1:\n\t')
         modfile.write('(sum {k in DIV1} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2])) * ')
         modfile.write('sum {k in DIV1} P[k,' + str(i) + ',3] = 0;\n')
         modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D2:\n\t')
