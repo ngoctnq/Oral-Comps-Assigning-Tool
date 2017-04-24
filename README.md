@@ -25,7 +25,7 @@ Open Terminal and run `git clone https://github.com/ngoctnq/Oral-Comps-Assigning
 
 <sub>Note: you have to install Xcode (it will happen automatically), which takes ~2min.</sub>
 
-<b><i>Step 2:</i>/<b>
+<b><i>Step 2:</i></b>
 Run the following code
 
 ```bash
