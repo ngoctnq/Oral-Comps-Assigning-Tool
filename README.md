@@ -12,7 +12,7 @@ This solver is basically a proof-of-concept - that is why CPLEX/Gurobi is used f
 This is a complete BIP problem, not completely linear however, in the sense that there are pairs that cannot be mutually zero. After handling basis variable enterring/leaving process for that, this problem become linear. The objective function is to minimize sum of squares, but since it is too slow for this project, I decided to minimize sum of absolute values (norm-1 instead of norm-2).
 
 ## Howto:
-<i>Step 0:</i> Manually remove bad data: for example, Allen M. Betts and his unavailability, Jensen A. Kirch his EMU minor (corrected to EDU).
+<i>Step 0:</i> Manually remove bad data: for example, Allen M. Betts and his unavailability, Jensen A. Kirch his EMU minor (corrected to EDU). Manually add data: list of departments division-wise, and list of faculties' IDs division-wise, in the format of `academic_divisions.xlsx`.
 
 <sub>Note: The department names are truncated to the last 3 characters to deal with MLL faculties - unforeseen side effects might occur if departments are named weirdly. Also, faculties in departments that no current senior is in will be ignored.</sub>
 
@@ -31,13 +31,15 @@ bash ensure_python.sh
 <sub>Note: This script, by default, will not use superuser privilege, and thus only install python modules locally for the current user. If this is were to install globally, `sudo` it. If you know how to use `virtualenv`, this project uses Python 2, and all the modules this needs are `pandas` and `xlrd`.</sub>
 
 <i> Step 3:</i>
-Run even more code:
+Run `init.py`, `ampl_gen.py`, then `ampl` with `mock.mod` and `mock.dat`, and finally `parse_output.py`. Run AMPL with CPLEX (or Gurobi, or CBC), or just use `mock.prod` or `mock.run`. All the parameters are optional, and the python calls are:
 
-```bash
-bash main.sh
+```
+python2 init.py [/path/to/people/data='2016.xlsx']
+python2 ampl_gen.py [/path/to/people/data='2016.xlsx'] [/path/to/division/data='academic_divisions.xlsx']
+python2 parse_output.py [/path/to/people/data='2016.xlsx']
 ```
 
-only for the school's demonstration laptop. Edit this based on installation of `ampl`, and etc.
+<sub>Consult `main.sh` for a short example - it is a retired script that does not work because I don't know how to use `bash`.</sub>
 
 <i> Step 4:</i>
 Voila - It's easy as 1-2-3(-4?)! Do what you want with the new generated `schedule.csv`.
