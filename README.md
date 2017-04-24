@@ -34,9 +34,9 @@ bash ensure_python.sh
 Run `init.py`, `ampl_gen.py`, then `ampl` with `mock.mod` and `mock.dat`, and finally `parse_output.py`. Run AMPL with CPLEX (or Gurobi, or CBC), or just use `mock.prod` or `mock.run`. All the parameters are optional, and the python calls are:
 
 ```
-python2 init.py [/path/to/people/data='2016.xlsx']
-python2 ampl_gen.py [/path/to/people/data='2016.xlsx'] [/path/to/division/data='academic_divisions.xlsx']
-python2 parse_output.py [/path/to/people/data='2016.xlsx']
+python2 init.py [/path/to/ppl/data='2016.xlsx']
+python2 ampl_gen.py [/path/to/ppl/data='2016.xlsx'] [/path/to/div/data='academic_divisions.xlsx']
+python2 parse_output.py [/path/to/ppl/data='2016.xlsx']
 ```
 
 <sub>Consult `main.sh` for a short example - it is a retired script that does not work because I don't know how to use `bash`.</sub>
