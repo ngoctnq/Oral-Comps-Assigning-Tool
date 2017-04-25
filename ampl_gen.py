@@ -12,7 +12,7 @@ path = sys.argv[1] if len(sys.argv) > 1 else '2016.xlsx'
 path2 = sys.argv[2] if len(sys.argv) > 2 else 'divisions.xlsx'
 # true: find the minimum total no of seshs for all faculties
 # false: find the most even schedule for all
-tALLfEVEN = True
+tALLfEVEN = False
 
 # initializations
 # st = students DataFrame
@@ -173,6 +173,11 @@ modfile.write('var C {TEACHER, STUDENT} binary;\n')
 # the order of student's profs
 modfile.write('var P {TEACHER, STUDENT, 1..4} binary;\n')
 
+# number of prof in at-large in each divisions
+modfile.write('var U {STUDENT, 1..3} binary;\n')
+# number of prof in majors/minors in each divisions
+modfile.write('var V {STUDENT, 1..3} integer;\n')
+
 if tALLfEVEN:
     # TO MINIMIZE: THE MAXIMUM NUMBER OF SESSIONS PER ALL
     modfile.write('var MAXPALL integer;\n')
@@ -294,27 +299,27 @@ for i in range(s_count):
                 modfile.write(' diff DEPT' + str(minor[i][j]))
             modfile.write(')} P[k,' + str(i) + ',3 + TRIPLE[' + str(i) + ']] = 1;\n')
         else:
-            modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D1:\n\t')
-            modfile.write('(sum {k in DIV1} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2] + P[k,' + str(i) + ',3])) * ')
-            modfile.write('sum {k in DIV1} P[k,' + str(i) + ',4] = 0;\n')
-            modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D2:\n\t')
-            modfile.write('(sum {k in DIV2} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2] + P[k,' + str(i) + ',3])) * ')
-            modfile.write('sum {k in DIV2} P[k,' + str(i) + ',4] = 0;\n')
-            modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D3:\n\t')
-            modfile.write('(sum {k in DIV3} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2] + P[k,' + str(i) + ',3])) * ')
-            modfile.write('sum {k in DIV3} P[k,' + str(i) + ',4] = 0;\n')
+            modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge {i in 1..3}:\n\t')
+            modfile.write('U['+str(i)+',i] * 3 + V['+str(i)+',i] <= 3;\n')
     # else, you have 2 cherry picked fac and now the 3rd
     else:
-        modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D1:\n\t')
-        modfile.write('(sum {k in DIV1} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2])) * ')
-        modfile.write('sum {k in DIV1} P[k,' + str(i) + ',3] = 0;\n')
-        modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D2:\n\t')
-        modfile.write('(sum {k in DIV2} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2])) * ')
-        modfile.write('sum {k in DIV2} P[k,' + str(i) + ',3] = 0;\n')
-        modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge_D3:\n\t')
-        modfile.write('(sum {k in DIV3} (P[k,' + str(i) + ',1] + P[k,' + str(i) + ',2])) * ')
-        modfile.write('sum {k in DIV3} P[k,' + str(i) + ',3] = 0;\n')
+        modfile.write('subject to Prof_Student_' + str(i) + '_AtLarge {i in 1..3}:\n\t')
+        modfile.write('U['+str(i)+',i] * 2 + V['+str(i)+',i] <= 2;\n')
     ### END OF NEW EXPERIMENTAL CODE
+
+modfile.write('subject to Udef1 {l in STUDENT}:\n\t')
+modfile.write('sum {k in DIV1} P[k,l,3+TRIPLE[l]] = U[l,1];\n')
+modfile.write('subject to Udef2 {l in STUDENT}:\n\t')
+modfile.write('sum {k in DIV2} P[k,l,3+TRIPLE[l]] = U[l,2];\n')
+modfile.write('subject to Udef3 {l in STUDENT}:\n\t')
+modfile.write('sum {k in DIV3} P[k,l,3+TRIPLE[l]] = U[l,3];\n')
+
+modfile.write('subject to Vdef1 {l in STUDENT}:\n\t')
+modfile.write('sum {k in DIV1, i in 1..2+TRIPLE[l]} P[k,l,i] = V[l,1];\n')
+modfile.write('subject to Vdef2 {l in STUDENT}:\n\t')
+modfile.write('sum {k in DIV2, i in 1..2+TRIPLE[l]} P[k,l,i] = V[l,2];\n')
+modfile.write('subject to Vdef3 {l in STUDENT}:\n\t')
+modfile.write('sum {k in DIV3, i in 1..2+TRIPLE[l]} P[k,l,i] = V[l,3];\n')
 
 # not new 1st major chair
 modfile.write('subject to No_New_1st_Major_Students:\n\t')

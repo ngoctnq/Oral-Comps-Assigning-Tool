@@ -35,7 +35,7 @@ bash ensure_python.sh
 <sub>Note: This script, by default, will not use superuser privilege, and thus only install python modules locally for the current user. If this is were to install globally, `sudo` it. If you know how to use `virtualenv`, this project uses Python 2, and all the modules this needs are `pandas` and `xlrd`.</sub>
 
 <b>Step 3:</b>
-Run `init.py`, `ampl_gen.py`, then `ampl` with `mock.mod` and `mock.dat`, and finally `parse_output.py`. Run AMPL with CPLEX (or Gurobi, or CBC), or just use `mock.prod` or `mock.run`. All the parameters are optional, and the python calls are:
+Run `init.py`, `ampl_gen.py`, then `ampl` with `mock.mod` and `mock.dat`, and finally `parse_output.py`. Run AMPL with CPLEX (or Gurobi, or CBC), or just use `cplex.run` or `gurobi.run`. All the parameters are optional, and the python calls are:
 
 ```bash
 python2 init.py [/path/to/ppl/data='2016.xlsx']
