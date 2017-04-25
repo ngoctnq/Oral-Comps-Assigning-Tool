@@ -9,7 +9,7 @@ This solver is basically a proof-of-concept - that is why CPLEX/Gurobi is used f
 ## How it works:
 `init.py` takes in the two csv files and parse the data out - this serves as a connector to any data container and form. Then, `ampl_gen.py` takes in 2 pandas DataFrame and yield a AMPL script. Then, use AMPL/AMPLIDE to solve the file. Finally, run `parse_output.py`. Each of the python script takes an optional parameter that is the location of the Excel spreadsheet to be supplied by the school - by default it is set to '2016.xlsx.'
 
-This is a complete BIP problem, not completely linear however, in the sense that there are pairs that cannot be mutually zero. After handling basis variable enterring/leaving process for that, this problem become linear. The objective function is to minimize sum of squares, but since it is too slow for this project, I decided to minimize sum of absolute values (norm-1 instead of norm-2).
+This is a completely linear BIP problem, after turning quadratic/cubic constraints into weighted linear ones. The objective function is to minimize sum of squares, but since it is too slow for this project, I decided to minimize sum of absolute values (norm-1 instead of norm-2).
 
 ## Howto:
 <b>Step 0:</b>
